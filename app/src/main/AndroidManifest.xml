@@ -9,6 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.SpaceLeague">
+        <activity android:name=".GameActivity"
+            android:theme="@style/Theme.SpaceLeague.noActionBar"
+            android:screenOrientation="landscape"/>
         <activity android:name=".MainActivity">
             android:theme="@style/Theme.SpaceLeague.noActionBar"
             android:screenOrientation="landscape"
