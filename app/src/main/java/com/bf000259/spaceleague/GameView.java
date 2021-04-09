@@ -3,14 +3,16 @@ package com.bf000259.spaceleague;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.view.MotionEvent;
 import android.view.SurfaceView;
 
 public class GameView extends SurfaceView implements Runnable {
     private Thread thread;
     private boolean isPlaying;
     private int screenX, screenY;
-    private float screenRatioX, screenRatioY;
+    protected static float screenRatioX, screenRatioY;
     private Paint paint;
+    private Player player;
     private int FRAMES_PER_SECOND = 60;
     private Background bg1, bg2;
 
@@ -25,6 +27,8 @@ public class GameView extends SurfaceView implements Runnable {
 
         bg1 = new Background(screenX, screenY, getResources());
         bg2 = new Background(screenX, screenY, getResources());
+
+        player = new Player(screenY, getResources());
 
         bg2.x = screenX;
 
@@ -47,18 +51,52 @@ public class GameView extends SurfaceView implements Runnable {
         }
     }
 
+    private void updateBackground(Background bg) {
+        bg.x -= 2 * screenRatioX;
+    }
+
+    private void updateBackgrounds() {
+        updateBackground(bg1);
+        updateBackground(bg2);
+    }
+
     private void checkBackground(Background bg) {
         if (bg.x + bg.bg.getWidth() < 0) {
             bg.x = screenX;
         }
     }
 
-    private void update() {
-        bg1.x -= 2 * screenRatioX;
-        bg2.x -= 1 * screenRatioX; // should be 2 but my driver issues make it look weird
-
+    private void checkBackgrounds() {
         checkBackground(bg1);
         checkBackground(bg2);
+    }
+
+    private void updatePlayer() {
+        if (player.isGoingUp) {
+            player.y -= 30 * screenRatioY;
+        }
+
+        if (player.isGoingDown) {
+            player.y += 30 * screenRatioY;
+        }
+    }
+
+    private void checkPlayer() {
+        if (player.y < 0) {
+            player.y = 0;
+        }
+
+        if (player.y >= screenY - player.height) {
+            player.y = screenY - player.height;
+        }
+    }
+
+    private void update() {
+        updateBackgrounds();
+        checkBackgrounds();
+
+        updatePlayer();
+        checkPlayer();
     }
 
     private void draw() {
@@ -66,6 +104,8 @@ public class GameView extends SurfaceView implements Runnable {
             Canvas canvas = getHolder().lockCanvas();
             canvas.drawBitmap(bg1.bg, bg1.x, bg1.y, paint);
             canvas.drawBitmap(bg2.bg, bg2.x, bg2.y, paint);
+
+            canvas.drawBitmap(player.getPlayer(), player.x, player.y, paint);
 
             getHolder().unlockCanvasAndPost(canvas);
         }
@@ -77,6 +117,44 @@ public class GameView extends SurfaceView implements Runnable {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    private boolean isPressedTopHalf(MotionEvent event) {
+        if (event.getY() < screenY / 2) {
+            return true;
+        }
+        return false;
+    }
+
+    private boolean isPressedBottomHalf(MotionEvent event) {
+        if (event.getY() > screenY / 2) {
+            return true;
+        }
+        return false;
+    }
+
+    private void checkPlayerDirection(MotionEvent event) {
+        player.isGoingUp = isPressedTopHalf(event);
+        player.isGoingDown = isPressedBottomHalf(event);
+    }
+
+    private void resetPlayerDirection() {
+        player.isGoingUp = false;
+        player.isGoingDown = false;
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                checkPlayerDirection(event);
+                break;
+            case MotionEvent.ACTION_UP:
+                resetPlayerDirection();
+                break;
+        }
+
+        return true;
     }
 
     @Override
