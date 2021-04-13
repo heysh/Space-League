@@ -74,11 +74,11 @@ public class GameView extends SurfaceView implements Runnable {
 
     private void updatePlayer() {
         if (player.isGoingUp) {
-            player.y -= 30 * screenRatioY;
+            player.y -= player.speed * screenRatioY;
         }
 
         if (player.isGoingDown) {
-            player.y += 30 * screenRatioY;
+            player.y += player.speed * screenRatioY;
         }
     }
 
@@ -110,7 +110,7 @@ public class GameView extends SurfaceView implements Runnable {
     }
 
     private void drawPlayer(Canvas canvas) {
-        canvas.drawBitmap(player.getPlayer(), player.x, player.y, paint);
+        canvas.drawBitmap(player.getBitmap(), player.x, player.y, paint);
     }
 
     private void draw() {
