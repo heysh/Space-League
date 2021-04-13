@@ -9,7 +9,7 @@ import android.view.SurfaceView;
 public class GameView extends SurfaceView implements Runnable {
     private Thread thread;
     private boolean isPlaying;
-    private int screenX, screenY;
+    protected int screenX, screenY;
     protected static float screenRatioX, screenRatioY;
     private Paint paint;
     private Player player;
