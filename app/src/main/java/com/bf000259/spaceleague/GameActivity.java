@@ -15,10 +15,13 @@ public class GameActivity extends AppCompatActivity {
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
+        Bundle b = getIntent().getExtras();
+        int level = b.getInt("level");
+
         Point point = new Point();
         getWindowManager().getDefaultDisplay().getSize(point);
 
-        gameView = new GameView(this, point.x, point.y);
+        gameView = new GameView(this, point.x, point.y, level);
 
         setContentView(gameView);
     }

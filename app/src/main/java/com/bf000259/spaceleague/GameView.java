@@ -13,14 +13,15 @@ public class GameView extends SurfaceView implements Runnable {
     protected static float screenRatioX, screenRatioY;
     private Paint paint;
     private Player player;
-    private int FRAMES_PER_SECOND = 60;
+    private int level, FRAMES_PER_SECOND = 60;
     private Background bg1, bg2;
 
-    public GameView(Context context, int screenX, int screenY) {
+    public GameView(Context context, int screenX, int screenY, int level) {
         super(context);
 
         this.screenX = screenX;
         this.screenY = screenY;
+        this.level = level;
 
         screenRatioX = 1920f / screenX;
         screenRatioY = 1080f / screenY;
