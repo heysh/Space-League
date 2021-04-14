@@ -43,12 +43,12 @@ public class GameView extends SurfaceView implements Runnable {
 
             // offset second enemy by a third of the screen
             if (i == 1) {
-                enemy.x = (int) (640 * screenRatioX);
+                enemy.x = (int) (enemy.x + (640 * screenRatioX));
             }
 
             // offset third enemy by two thirds of the screen
             if (i == 2) {
-                enemy.x = (int) (1280 * screenRatioX);
+                enemy.x = (int) (enemy.x + (1280 * screenRatioX));
             }
 
             enemies[i] = enemy;
