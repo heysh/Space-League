@@ -3,6 +3,7 @@ package com.bf000259.spaceleague;
 // TODO: handle the endgame, i.e. player crashing
 // TODO: add high scores table
 // TODO: change the way the player is controlled -> drag and hold
+// TODO: change level selection menu so the rest of the screen dims
 
 import android.content.Context;
 import android.graphics.Canvas;
