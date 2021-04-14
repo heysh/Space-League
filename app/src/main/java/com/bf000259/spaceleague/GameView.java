@@ -18,7 +18,7 @@ public class GameView extends SurfaceView implements Runnable {
     private Player player;
     private Enemy[] enemies;
     private Random random;
-    private int level, FRAMES_PER_SECOND = 60;
+    private int level, FRAMES_PER_SECOND = 60, BACKGROUND_SPEED = 2;
     private Background bg1, bg2;
 
     private Enemy createCorrectEnemy() {
@@ -97,7 +97,7 @@ public class GameView extends SurfaceView implements Runnable {
     }
 
     private void updateBackground(Background bg) {
-        bg.x -= 2 * screenRatioX;
+        bg.x -= BACKGROUND_SPEED;
     }
 
     private void updateBackgrounds() {
@@ -107,7 +107,7 @@ public class GameView extends SurfaceView implements Runnable {
 
     private void checkBackground(Background bg) {
         if (bg.x + bg.bg.getWidth() < 0) {
-            bg.x = screenX;
+            bg.x = screenX - BACKGROUND_SPEED;
         }
     }
 
