@@ -7,6 +7,14 @@
     tools:context=".MainActivity">
 
     <ImageView
+        android:id="@+id/backgroundOne"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/background"
+        android:scaleType="centerCrop"/>
+
+    <ImageView
+        android:id="@+id/backgroundTwo"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:src="@drawable/background"
