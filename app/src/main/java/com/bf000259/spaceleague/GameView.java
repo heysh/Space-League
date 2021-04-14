@@ -1,5 +1,10 @@
 package com.bf000259.spaceleague;
 
+// TODO: handle the endgame, i.e. player crashing
+// TODO: add high scores table
+// TODO: increase difficulty if the player is doing well
+// TODO: change the way the player is controlled -> drag and hold
+
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
