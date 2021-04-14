@@ -3,8 +3,11 @@ package com.bf000259.spaceleague;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.view.MotionEvent;
 import android.view.SurfaceView;
+
+import java.util.Random;
 
 public class GameView extends SurfaceView implements Runnable {
     private Thread thread;
@@ -13,8 +16,43 @@ public class GameView extends SurfaceView implements Runnable {
     protected static float screenRatioX, screenRatioY;
     private Paint paint;
     private Player player;
+    private Enemy[] enemies;
+    private Random random;
     private int level, FRAMES_PER_SECOND = 60;
     private Background bg1, bg2;
+
+    private Enemy createCorrectEnemy() {
+        // easy
+        if (level == 1) {
+            return new EnemyEasy(getResources());
+        }
+
+        // medium
+        if (level == 2) {
+            return new EnemyMedium(getResources());
+        }
+
+        // hard
+        return new EnemyHard(getResources());
+    }
+
+    private void createEnemies() {
+        for (int i = 0; i < 3; i++) {
+            Enemy enemy = createCorrectEnemy();
+
+            // offset second enemy by a third of the screen
+            if (i == 1) {
+                enemy.x = (int) (640 * screenRatioX);
+            }
+
+            // offset third enemy by two thirds of the screen
+            if (i == 2) {
+                enemy.x = (int) (1280 * screenRatioX);
+            }
+
+            enemies[i] = enemy;
+        }
+    }
 
     public GameView(Context context, int screenX, int screenY, int level) {
         super(context);
@@ -34,6 +72,12 @@ public class GameView extends SurfaceView implements Runnable {
         bg2.x = screenX;
 
         paint = new Paint();
+
+        enemies = new Enemy[3];
+
+        createEnemies();
+
+        random = new Random();
     }
 
     public void resume() {
@@ -92,12 +136,35 @@ public class GameView extends SurfaceView implements Runnable {
         }
     }
 
+    private void checkEnemyOffScreen(Enemy enemy) {
+        if (enemy.x + enemy.width < 0) {
+            enemy.x = screenX;
+            enemy.y = random.nextInt(screenY - enemy.height);
+        }
+    }
+
+    private void checkEnemyHitPlayer(Enemy enemy) {
+        if (Rect.intersects(enemy.getRectangle(), player.getRectangle())) {
+            isPlaying = false;
+        }
+    }
+
+    private void updateEnemies() {
+        for (Enemy enemy : enemies) {
+            enemy.x -= enemy.speed;
+            checkEnemyOffScreen(enemy);
+            checkEnemyHitPlayer(enemy);
+        }
+    }
+
     private void update() {
         updateBackgrounds();
         checkBackgrounds();
 
         updatePlayer();
         checkPlayer();
+
+        updateEnemies();
     }
 
     private void drawBackground(Canvas canvas, Background bg) {
@@ -113,12 +180,19 @@ public class GameView extends SurfaceView implements Runnable {
         canvas.drawBitmap(player.getBitmap(), player.x, player.y, paint);
     }
 
+    private void drawEnemies(Canvas canvas) {
+        for (Enemy enemy : enemies) {
+            canvas.drawBitmap(enemy.getBitmap(), enemy.x, enemy.y, paint);
+        }
+    }
+
     private void draw() {
         if (getHolder().getSurface().isValid()) {
             Canvas canvas = getHolder().lockCanvas();
 
             drawBackgrounds(canvas);
             drawPlayer(canvas);
+            drawEnemies(canvas);
 
             getHolder().unlockCanvasAndPost(canvas);
         }
