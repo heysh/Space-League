@@ -2,6 +2,7 @@ package com.bf000259.spaceleague;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.view.MotionEvent;
@@ -13,7 +14,7 @@ public class GameView extends SurfaceView implements Runnable {
     private Thread thread;
     private boolean isPlaying;
     protected static int screenX, screenY;
-    private int level;
+    private int level, score = 0;
     private static final int FRAMES_PER_SECOND = 60, BACKGROUND_SPEED = 2;
     protected static float screenRatioX, screenRatioY;
     private Paint paint;
@@ -21,6 +22,11 @@ public class GameView extends SurfaceView implements Runnable {
     private Enemy[] enemies;
     private Random random;
     private Background bg1, bg2;
+
+    private void configurePaint() {
+        paint.setTextSize(128);
+        paint.setColor(Color.WHITE);
+    }
 
     private Enemy createCorrectEnemy() {
         // easy
@@ -72,6 +78,7 @@ public class GameView extends SurfaceView implements Runnable {
         player = new Player(screenY, getResources());
 
         paint = new Paint();
+        configurePaint();
 
         enemies = new Enemy[3];
         createEnemies();
@@ -137,6 +144,7 @@ public class GameView extends SurfaceView implements Runnable {
 
     private void checkEnemyOffScreen(Enemy enemy) {
         if (enemy.x + enemy.width < 0) {
+            score++;
             enemy.x = screenX;
             enemy.y = random.nextInt(screenY - enemy.height);
         }
@@ -175,6 +183,10 @@ public class GameView extends SurfaceView implements Runnable {
         drawBackground(canvas, bg2);
     }
 
+    private void drawScore(Canvas canvas) {
+        canvas.drawText(Integer.toString(score), screenX / 2f, 164, paint);
+    }
+
     private void drawPlayer(Canvas canvas) {
         canvas.drawBitmap(player.getBitmap(), player.x, player.y, paint);
     }
@@ -192,6 +204,7 @@ public class GameView extends SurfaceView implements Runnable {
             drawBackgrounds(canvas);
             drawPlayer(canvas);
             drawEnemies(canvas);
+            drawScore(canvas);
 
             getHolder().unlockCanvasAndPost(canvas);
         }
