@@ -12,7 +12,8 @@ import java.util.Random;
 public class GameView extends SurfaceView implements Runnable {
     private Thread thread;
     private boolean isPlaying;
-    private int screenX, screenY, level;
+    protected static int screenX, screenY;
+    private int level;
     private static final int FRAMES_PER_SECOND = 60, BACKGROUND_SPEED = 2;
     protected static float screenRatioX, screenRatioY;
     private Paint paint;
@@ -74,7 +75,6 @@ public class GameView extends SurfaceView implements Runnable {
         paint = new Paint();
 
         enemies = new Enemy[3];
-
         createEnemies();
 
         random = new Random();
