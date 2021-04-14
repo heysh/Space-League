@@ -12,13 +12,13 @@ import java.util.Random;
 public class GameView extends SurfaceView implements Runnable {
     private Thread thread;
     private boolean isPlaying;
-    private int screenX, screenY;
+    private int screenX, screenY, level;
+    private static final int FRAMES_PER_SECOND = 60, BACKGROUND_SPEED = 2;
     protected static float screenRatioX, screenRatioY;
     private Paint paint;
     private Player player;
     private Enemy[] enemies;
     private Random random;
-    private int level, FRAMES_PER_SECOND = 60, BACKGROUND_SPEED = 2;
     private Background bg1, bg2;
 
     private Enemy createCorrectEnemy() {
