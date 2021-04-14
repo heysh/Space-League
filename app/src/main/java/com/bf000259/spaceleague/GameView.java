@@ -2,7 +2,6 @@ package com.bf000259.spaceleague;
 
 // TODO: handle the endgame, i.e. player crashing
 // TODO: add high scores table
-// TODO: increase difficulty if the player is doing well
 // TODO: change the way the player is controlled -> drag and hold
 
 import android.content.Context;
@@ -19,7 +18,7 @@ public class GameView extends SurfaceView implements Runnable {
     private Thread thread;
     private boolean isPlaying;
     protected static int screenX, screenY;
-    private int level, score = 0;
+    private int level, score = 0, replaceEnemies = 0;
     private static final int FRAMES_PER_SECOND = 60, BACKGROUND_SPEED = 2;
     protected static float screenRatioX, screenRatioY;
     private Paint paint;
@@ -147,9 +146,24 @@ public class GameView extends SurfaceView implements Runnable {
         }
     }
 
+    private void replaceEnemy(Enemy enemy) {
+        int index = enemy.enemyId;  // get index of enemy
+        enemies[index] = null;  // delete enemy
+        enemy = createCorrectEnemy();  // create correct enemy
+        enemy.enemyId = index;  // set the correct ID for the new enemy
+        Enemy.enemyCounter--;  // decrement the enemy counter
+        enemies[index] = enemy;  // insert the new enemy into the array of enemies
+    }
+
     private void checkEnemyOffScreen(Enemy enemy) {
         if (enemy.x + enemy.width < 0) {
-            score++;
+            score += enemy.score;
+
+            if (replaceEnemies > 0) {
+                replaceEnemy(enemy);
+                replaceEnemies--;
+            }
+
             enemy.x = screenX;
             enemy.y = random.nextInt(screenY - enemy.height);
         }
@@ -169,6 +183,18 @@ public class GameView extends SurfaceView implements Runnable {
         }
     }
 
+    private void checkScore() {
+        if (level == 1 && score > 15) {
+            level = 2;
+        }
+
+        if (level == 2 && score > 40) {
+            level = 3;
+        }
+
+        replaceEnemies = 3;
+    }
+
     private void update() {
         updateBackgrounds();
         checkBackgrounds();
@@ -177,6 +203,8 @@ public class GameView extends SurfaceView implements Runnable {
         checkPlayer();
 
         updateEnemies();
+
+        checkScore();
     }
 
     private void drawBackground(Canvas canvas, Background bg) {

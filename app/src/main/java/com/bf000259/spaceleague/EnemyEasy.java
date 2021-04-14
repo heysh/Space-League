@@ -4,6 +4,6 @@ import android.content.res.Resources;
 
 public class EnemyEasy extends Enemy {
     public EnemyEasy(Resources res) {
-        super(15, res, R.drawable.enemyeasy);
+        super(15, 1, res, R.drawable.enemyeasy);
     }
 }
