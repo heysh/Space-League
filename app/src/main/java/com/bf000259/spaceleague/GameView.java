@@ -67,10 +67,9 @@ public class GameView extends SurfaceView implements Runnable {
 
         bg1 = new Background(screenX, screenY, getResources());
         bg2 = new Background(screenX, screenY, getResources());
+        bg2.x = screenX;
 
         player = new Player(screenY, getResources());
-
-        bg2.x = screenX;
 
         paint = new Paint();
 
