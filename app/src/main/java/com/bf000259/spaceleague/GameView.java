@@ -1,7 +1,9 @@
 package com.bf000259.spaceleague;
 
-// TODO: change the way the player is controlled -> drag and hold
-// TODO: add a pause between level changes
+// TODO: sort high scores in descending order
+// TODO: hide navigation bar
+// TODO: use accelerometer to move the player on the x axis
+// TODO: add a pause between level changes - draw the new level on the screen in the gap
 
 import android.content.Context;
 import android.content.Intent;
