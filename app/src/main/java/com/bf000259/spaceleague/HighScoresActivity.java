@@ -48,7 +48,7 @@ public class HighScoresActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 highScores.clear();
-                retrieveHighScores();
+                retrieveHighScores(snapshot);
                 adapter.notifyDataSetChanged();
             }
 
