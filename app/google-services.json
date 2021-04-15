@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1007906364300",
+    "project_id": "space-league",
+    "storage_bucket": "space-league.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1007906364300:android:932d09669252f2483e14a9",
+        "android_client_info": {
+          "package_name": "com.bf000259.spaceleague"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1007906364300-ln1104nbsq13jkcildqop8b2ej6c2vaj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDPXL7h5OTx1Tnt0XjRitInVPTy4LsYTzg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1007906364300-ln1104nbsq13jkcildqop8b2ej6c2vaj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

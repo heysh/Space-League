@@ -14,6 +14,9 @@ import android.graphics.Rect;
 import android.view.MotionEvent;
 import android.view.SurfaceView;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.Random;
 
 public class GameView extends SurfaceView implements Runnable {
@@ -248,6 +251,12 @@ public class GameView extends SurfaceView implements Runnable {
         }
     }
 
+    private void uploadHighScoreToFirebase() {
+        FirebaseDatabase root = FirebaseDatabase.getInstance();
+        DatabaseReference ref = root.getReference("High Scores");
+        ref.push().setValue(name + ": " + score);
+    }
+
     private void waitBeforeExiting() {
         try {
             Thread.sleep(2000);
@@ -260,6 +269,7 @@ public class GameView extends SurfaceView implements Runnable {
 
     private void handleEndgame() {
         updateLocalHighScore();
+        uploadHighScoreToFirebase();
         waitBeforeExiting();
     }
 
