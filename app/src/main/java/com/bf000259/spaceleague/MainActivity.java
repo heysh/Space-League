@@ -9,10 +9,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.renderscript.Sampler;
+import android.text.InputType;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.LinearInterpolator;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -20,7 +22,9 @@ import android.widget.TextView;
 import org.w3c.dom.Text;
 
 public class MainActivity extends AppCompatActivity {
+    private SharedPreferences prefs;
     private int level;
+    private String name = "Anon";
 
     private void animateBackground() {
         final ImageView bg1 = (ImageView) findViewById(R.id.backgroundOne);
@@ -48,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
     private void launchGame() {
         Intent play = new Intent(MainActivity.this, GameActivity.class);
         play.putExtra("level", level);
+        play.putExtra("name", name);
         startActivity(play);
     }
 
@@ -92,11 +97,51 @@ public class MainActivity extends AppCompatActivity {
         hard.setLayoutParams(layoutParams);
     }
 
+    private void updateEnterNameText() {
+        TextView enterName = findViewById(R.id.enterName);
+        enterName.setText(name);
+    }
+
+    private void saveNameLocally() {
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("name", name);
+        editor.apply();
+    }
+
+    private void enterNameDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        builder.setTitle("Enter your name");
+
+        final EditText input = new EditText(MainActivity.this);
+        input.setInputType(InputType.TYPE_CLASS_TEXT);
+        builder.setView(input);
+
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                name = input.getText().toString();
+                updateEnterNameText();
+                saveNameLocally();
+            }
+        });
+
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        builder.show();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        prefs = getSharedPreferences("spaceLeague", MODE_PRIVATE);
 
         setContentView(R.layout.activity_main);
 
@@ -109,8 +154,17 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        findViewById(R.id.enterName).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                enterNameDialog();
+            }
+        });
+
+        TextView enterName = findViewById(R.id.enterName);
+        enterName.setText(prefs.getString("name", "ENTER NAME"));
+
         TextView highScores = findViewById(R.id.highScores);
-        SharedPreferences prefs = getSharedPreferences("spaceLeague", MODE_PRIVATE);
         highScores.setText("HIGH SCORE  " + prefs.getInt("highScore", 0));
     }
 }

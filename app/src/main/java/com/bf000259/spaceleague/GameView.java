@@ -24,6 +24,7 @@ public class GameView extends SurfaceView implements Runnable {
     private int level, score = 0, replaceEnemies = 0;
     private static final int FRAMES_PER_SECOND = 60, BACKGROUND_SPEED = 2;
     protected static float screenRatioX, screenRatioY;
+    private String name;
     private SharedPreferences prefs;
     private Paint paint;
     private Player player;
@@ -69,7 +70,7 @@ public class GameView extends SurfaceView implements Runnable {
         }
     }
 
-    public GameView(GameActivity activity, int screenX, int screenY, int level) {
+    public GameView(GameActivity activity, int screenX, int screenY, int level, String name) {
         super(activity);
 
         this.activity = activity;
@@ -79,6 +80,7 @@ public class GameView extends SurfaceView implements Runnable {
         this.screenX = screenX;
         this.screenY = screenY;
         this.level = level;
+        this.name = name;
 
         screenRatioX = 1920f / screenX;
         screenRatioY = 1080f / screenY;

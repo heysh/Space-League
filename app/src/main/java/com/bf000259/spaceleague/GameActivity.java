@@ -17,11 +17,12 @@ public class GameActivity extends AppCompatActivity {
 
         Bundle b = getIntent().getExtras();
         int level = b.getInt("level");
+        String name = b.getString("name");
 
         Point point = new Point();
         getWindowManager().getDefaultDisplay().getSize(point);
 
-        gameView = new GameView(this, point.x, point.y, level);
+        gameView = new GameView(this, point.x, point.y, level, name);
 
         setContentView(gameView);
     }
