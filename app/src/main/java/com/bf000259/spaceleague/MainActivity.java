@@ -24,7 +24,7 @@ import org.w3c.dom.Text;
 public class MainActivity extends AppCompatActivity {
     private SharedPreferences prefs;
     private int level;
-    private String name = "Anon";
+    private String name;
 
     private void animateBackground() {
         final ImageView bg1 = (ImageView) findViewById(R.id.backgroundOne);
@@ -142,6 +142,7 @@ public class MainActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         prefs = getSharedPreferences("spaceLeague", MODE_PRIVATE);
+        name = prefs.getString("name", "Anon");
 
         setContentView(R.layout.activity_main);
 
