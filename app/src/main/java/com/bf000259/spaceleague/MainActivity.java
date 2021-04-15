@@ -132,6 +132,11 @@ public class MainActivity extends AppCompatActivity {
         builder.show();
     }
 
+    private void showHighScores() {
+        Intent highScores = new Intent(MainActivity.this, HighScoresActivity.class);
+        startActivity(highScores);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -156,6 +161,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 enterNameDialog();
+            }
+        });
+
+        findViewById(R.id.highScores).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showHighScores();
             }
         });
 

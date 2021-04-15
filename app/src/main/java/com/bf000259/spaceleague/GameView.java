@@ -1,6 +1,5 @@
 package com.bf000259.spaceleague;
 
-// TODO: add high scores table
 // TODO: change the way the player is controlled -> drag and hold
 // TODO: add a pause between level changes
 
