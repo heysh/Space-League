@@ -21,9 +21,6 @@ public class Enemy extends Object {
     }
 
     public Enemy(int speed, int score, Resources res, int id) {
-        x = screenX;
-        y = getRandomY();
-
         this.speed = speed;
         this.score = score;
         this.enemyId = enemyCounter++;
@@ -35,6 +32,9 @@ public class Enemy extends Object {
 
         width = (int) (screenRatioX * width);
         height = (int) (screenRatioY * height);
+
+        x = screenX;
+        y = getRandomY();
 
         bitmap = Bitmap.createScaledBitmap(bitmap, width, height, false);
     }
