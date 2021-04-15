@@ -1,12 +1,13 @@
 package com.bf000259.spaceleague;
 
-// TODO: handle the endgame, i.e. player crashing
 // TODO: add high scores table
 // TODO: change the way the player is controlled -> drag and hold
 // TODO: change level selection menu so the rest of the screen dims
 // TODO: add a pause between level changes
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -18,11 +19,13 @@ import java.util.Random;
 
 public class GameView extends SurfaceView implements Runnable {
     private Thread thread;
+    private GameActivity activity;
     private boolean isPlaying;
     protected static int screenX, screenY;
     private int level, score = 0, replaceEnemies = 0;
     private static final int FRAMES_PER_SECOND = 60, BACKGROUND_SPEED = 2;
     protected static float screenRatioX, screenRatioY;
+    private SharedPreferences prefs;
     private Paint paint;
     private Player player;
     private Enemy[] enemies;
@@ -67,8 +70,12 @@ public class GameView extends SurfaceView implements Runnable {
         }
     }
 
-    public GameView(Context context, int screenX, int screenY, int level) {
-        super(context);
+    public GameView(GameActivity activity, int screenX, int screenY, int level) {
+        super(activity);
+
+        this.activity = activity;
+
+        prefs = activity.getSharedPreferences("spaceLeague", Context.MODE_PRIVATE);
 
         this.screenX = screenX;
         this.screenY = screenY;
@@ -232,8 +239,36 @@ public class GameView extends SurfaceView implements Runnable {
         }
     }
 
+    private void updateHighScore() {
+        if (prefs.getInt("highScore", 0) < score) {
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putInt("highScore", score);
+            editor.apply();
+        }
+    }
+
+    private void waitBeforeExiting() {
+        try {
+            Thread.sleep(2000);
+            activity.finish();
+            activity.startActivity(new Intent(activity, MainActivity.class));
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void handleEndgame() {
+        updateHighScore();
+        waitBeforeExiting();
+    }
+
     private void draw() {
         if (getHolder().getSurface().isValid()) {
+            if (!isPlaying) {
+                handleEndgame();
+                return;
+            }
+
             Canvas canvas = getHolder().lockCanvas();
 
             drawBackgrounds(canvas);

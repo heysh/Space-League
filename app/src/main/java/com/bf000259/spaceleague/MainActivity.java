@@ -4,12 +4,16 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.animation.ValueAnimator;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.renderscript.Sampler;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -52,5 +56,9 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, PopUp.class));
             }
         });
+
+        TextView highScores = findViewById(R.id.highScores);
+        SharedPreferences prefs = getSharedPreferences("spaceLeague", MODE_PRIVATE);
+        highScores.setText("HIGH SCORE  " + prefs.getInt("highScore", 0));
     }
 }
