@@ -8,13 +8,14 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.SpaceLeague">
+        android:theme="@style/Theme.SpaceLeague.noActionBar">
         <activity android:name=".GameActivity"
-            android:theme="@style/Theme.SpaceLeague.noActionBar"
             android:screenOrientation="landscape"/>
-        <activity android:name=".MainActivity">
-            android:theme="@style/Theme.SpaceLeague.noActionBar"
-            android:screenOrientation="landscape"
+        <activity android:name=".HighScoresActivity"
+            android:theme="@style/Theme.SpaceLeague"
+            android:screenOrientation="landscape"/>
+        <activity android:name=".MainActivity"
+            android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
