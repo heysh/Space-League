@@ -33,7 +33,7 @@ public class Enemy extends Object {
         width = (int) (screenRatioX * width);
         height = (int) (screenRatioY * height);
 
-        x = screenX;
+        x = 2 * screenX;
         y = getRandomY();
 
         bitmap = Bitmap.createScaledBitmap(bitmap, width, height, false);
