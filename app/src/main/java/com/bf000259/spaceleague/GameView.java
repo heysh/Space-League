@@ -280,14 +280,6 @@ public class GameView extends SurfaceView implements Runnable {
         }
     }
 
-    private void sleep() {
-        try {
-            Thread.sleep(1000 / FRAMES_PER_SECOND);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-
     private boolean isPressedTopHalf(MotionEvent event) {
         if (event.getY() < screenY / 2) {
             return true;
@@ -326,12 +318,28 @@ public class GameView extends SurfaceView implements Runnable {
         return true;
     }
 
+    private void sleep() {
+        try {
+            Thread.sleep(1000 / FRAMES_PER_SECOND);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    private void refreshThread() {
+        Runnable r = () -> {
+            sleep();
+        };
+        Thread refreshThread = new Thread(r);
+        refreshThread.start();
+    }
+
     @Override
     public void run() {
         while (isPlaying) {
             update();
             draw();
-            sleep();
+            refreshThread();
         }
     }
 }
