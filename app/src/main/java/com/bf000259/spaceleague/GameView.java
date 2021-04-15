@@ -195,13 +195,13 @@ public class GameView extends SurfaceView implements Runnable {
     private void checkScore() {
         if (level == 1 && score > 15) {
             level = 2;
+            replaceEnemies = 3;
         }
 
         if (level == 2 && score > 40) {
             level = 3;
+            replaceEnemies = 3;
         }
-
-        replaceEnemies = 3;
     }
 
     private void update() {
