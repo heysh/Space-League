@@ -15,6 +15,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class HighScoresActivity extends AppCompatActivity {
     private Query ref;
@@ -29,6 +30,8 @@ public class HighScoresActivity extends AppCompatActivity {
             score = snap.child("score").getValue().toString();
             highScores.add(name + ": " + score);
         }
+
+        Collections.reverse(highScores);
     }
 
     @Override
@@ -42,7 +45,7 @@ public class HighScoresActivity extends AppCompatActivity {
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, highScores);
         listView.setAdapter(adapter);
 
-        ref = FirebaseDatabase.getInstance().getReference().child("High Scores");
+        ref = FirebaseDatabase.getInstance().getReference().child("High Scores").orderByChild("score");
 
         ref.addValueEventListener(new ValueEventListener() {
             @Override

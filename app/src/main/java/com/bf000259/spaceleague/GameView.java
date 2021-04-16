@@ -1,6 +1,5 @@
 package com.bf000259.spaceleague;
 
-// TODO: sort high scores in descending order
 // TODO: hide navigation bar
 // TODO: use accelerometer to move the player on the x axis
 // TODO: add a pause between level changes - draw the new level on the screen in the gap
@@ -19,8 +18,6 @@ import android.view.SurfaceView;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Random;
 
 public class GameView extends SurfaceView implements Runnable {
@@ -258,9 +255,7 @@ public class GameView extends SurfaceView implements Runnable {
     private void uploadHighScoreToFirebase() {
         FirebaseDatabase root = FirebaseDatabase.getInstance();
         DatabaseReference ref = root.getReference("High Scores");
-        Map<String, String> post = new HashMap<>();
-        post.put("name", name);
-        post.put("score", String.valueOf(score));
+        HighScore post = new HighScore(name, score);
         ref.push().setValue(post);
     }
 
