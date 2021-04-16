@@ -3,6 +3,10 @@ package com.bf000259.spaceleague;
 import android.graphics.Bitmap;
 import android.graphics.Rect;
 
+/**
+ * Class responsible for holding variables, and providing access to these variables.
+ * @author Harshil Surendralal bf000259
+ */
 public class Object {
     protected int x, y, width, height, speed;
     protected Bitmap bitmap;

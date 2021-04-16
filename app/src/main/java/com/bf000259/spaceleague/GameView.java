@@ -15,6 +15,10 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Random;
 
+/**
+ * Main driver class of the game - responsible for the actual gameplay.
+ * @author Harshil Surendralal bf000259
+ */
 public class GameView extends SurfaceView implements Runnable {
     private Thread thread;
     private GameActivity activity;
@@ -32,11 +36,18 @@ public class GameView extends SurfaceView implements Runnable {
     private Random random;
     private Background bg1, bg2;
 
+    /**
+     * Configures the paint for drawing text onto the screen.
+     */
     private void configurePaint() {
         paint.setTextSize(128);
         paint.setColor(Color.WHITE);
     }
 
+    /**
+     * Create an object of type Enemy, depending on which level the user is currently playing.
+     * @return An enemy with the correct difficulty for the level.
+     */
     private Enemy createCorrectEnemy() {
         // easy
         if (level == 1) {
@@ -52,6 +63,9 @@ public class GameView extends SurfaceView implements Runnable {
         return new EnemyHard(getResources());
     }
 
+    /**
+     * Create all three enemies.
+     */
     private void createEnemies() {
         for (int i = 0; i < 3; i++) {
             Enemy enemy = createCorrectEnemy();
@@ -70,6 +84,14 @@ public class GameView extends SurfaceView implements Runnable {
         }
     }
 
+    /**
+     * Set up all of the components that will be used during play.
+     * @param activity The GameActivity.
+     * @param screenX The width of the device's screen.
+     * @param screenY The height of the device's screen.
+     * @param level The level selected by the user.
+     * @param name The name of the user.
+     */
     public GameView(GameActivity activity, int screenX, int screenY, int level, String name) {
         super(activity);
 
@@ -101,12 +123,18 @@ public class GameView extends SurfaceView implements Runnable {
         random = new Random();
     }
 
+    /**
+     * Resume the game.
+     */
     public void resume() {
         isPlaying = true;
         thread = new Thread(this);
         thread.start();
     }
 
+    /**
+     * Pause the game.
+     */
     public void pause() {
         isPlaying = false;
 
@@ -117,89 +145,134 @@ public class GameView extends SurfaceView implements Runnable {
         }
     }
 
+    /**
+     * Move the x co-ordinate of the background.
+     * @param bg The background that is to be updated.
+     */
     private void updateBackground(Background bg) {
         bg.x -= BACKGROUND_SPEED;
     }
 
+    /**
+     * Update both backgrounds.
+     */
     private void updateBackgrounds() {
         updateBackground(bg1);
         updateBackground(bg2);
     }
 
+    /**
+     * Check if the background has gone off the left-hand side of the screen.
+     * @param bg The background that is to be checked.
+     */
     private void checkBackground(Background bg) {
         if (bg.x + bg.bg.getWidth() < 0) {
             bg.x = screenX - BACKGROUND_SPEED;
         }
     }
 
+    /**
+     * Check both backgrounds.
+     */
     private void checkBackgrounds() {
         checkBackground(bg1);
         checkBackground(bg2);
     }
 
+    /**
+     * Reset the values recorded by the accelerometer.
+     */
     private void resetAccelerometerReadings() {
         player.isGoingLeft = false;
         player.isGoingRight = false;
     }
 
+    /**
+     * Check if the user is tilting their phone leftwards or rightwards.
+     */
     private void checkAccelerometer() {
+        // user is tilting to the left
         if (accelerometer.tilt <= -1) {
             player.isGoingLeft = true;
         }
 
+        // user is tilting to the right
         if (accelerometer.tilt >= 1) {
             player.isGoingRight = true;
         }
     }
 
+    /**
+     * Update the co-ordinates of the player with the direction they are going.
+     */
     private void updatePlayer() {
+        // move the player up
         if (player.isGoingUp) {
             player.y -= player.speed * screenRatioY;
         }
 
+        // move the player down
         if (player.isGoingDown) {
             player.y += player.speed * screenRatioY;
         }
 
+        // move the player left
         if (player.isGoingLeft) {
             player.x -= player.speed * screenRatioY;
         }
 
+        // move the player right
         if (player.isGoingRight) {
             player.x += player.speed * screenRatioY;
         }
     }
 
+    /**
+     * Ensure the player is not going off the sides of the screen.
+     */
     private void checkPlayer() {
+        // player is limited to the top of the screen
         if (player.y < 0) {
             player.y = 0;
         }
 
+        // player is limited to the bottom of the screen
         if (player.y >= screenY - player.height) {
             player.y = screenY - player.height;
         }
 
+        // player is limited to the left-hand side of the screen
         if (player.x < 0) {
             player.x = 0;
         }
 
+        // player is limited to the right-hand side of the screen
         if (player.x >= screenX - player.width) {
             player.x = screenX - player.width;
         }
     }
 
+    /**
+     * Increase difficulty if the player is doing well in their level.
+     */
     private void checkScore() {
+        // medium difficulty
         if (level == 1 && score > 15) {
             level = 2;
             replaceEnemies = 3;
         }
 
+        // hard difficulty
         if (level == 2 && score > 40) {
             level = 3;
             replaceEnemies = 3;
         }
     }
 
+    /**
+     * Replace an enemy with one that is of the correct difficulty.
+     * @param enemy The enemy that is to be replaced.
+     */
     private void replaceEnemy(Enemy enemy) {
         int index = enemy.enemyId;  // get index of enemy
         enemies[index] = null;  // delete enemy
@@ -209,27 +282,43 @@ public class GameView extends SurfaceView implements Runnable {
         enemies[index] = enemy;  // insert the new enemy into the array of enemies
     }
 
+    /**
+     * Check if an enemy has gone off the left-hand side of the screen. The enemy will be reset
+     * to the right-hand side of the screen if this is true.
+     * @param enemy The enemy that is to be checked.
+     */
     private void checkEnemyOffScreen(Enemy enemy) {
         if (enemy.x + enemy.width < 0) {
-            score += enemy.score;
-            checkScore();
+            score += enemy.score;  // add the points earned to the user's score
+            checkScore();  // check if the user is eligible to move onto the next level
 
+            // if the difficulty has increased, replace the enemy
             if (replaceEnemies > 0) {
                 replaceEnemy(enemy);
                 replaceEnemies--;
             }
 
+            // set the new co-ordinates of the enemy
             enemy.x = screenX;
             enemy.y = random.nextInt(screenY - enemy.height);
         }
     }
 
+    /**
+     * Check if an enemy has collided with the player. The game will end if this is true, otherwise
+     * the user will continue playing.
+     * @param enemy The enemy that is to be checked.
+     */
     private void checkEnemyHitPlayer(Enemy enemy) {
         if (Rect.intersects(enemy.getRectangle(), player.getRectangle())) {
             isPlaying = false;
         }
     }
 
+    /**
+     * Iterate through each enemy, and update their position on the screen. Check each enemy to see
+     * whether they have gone off the screen, or hit the player.
+     */
     private void updateEnemies() {
         for (Enemy enemy : enemies) {
             enemy.x -= enemy.speed;
@@ -238,6 +327,9 @@ public class GameView extends SurfaceView implements Runnable {
         }
     }
 
+    /**
+     * Update the background, the player, and the enemies.
+     */
     private void update() {
         updateBackgrounds();
         checkBackgrounds();
@@ -250,29 +342,53 @@ public class GameView extends SurfaceView implements Runnable {
         updateEnemies();
     }
 
+    /**
+     * Draw the background onto the canvas.
+     * @param canvas The canvas on which the background will be drawn.
+     * @param bg The background that is to be drawn.
+     */
     private void drawBackground(Canvas canvas, Background bg) {
         canvas.drawBitmap(bg.bg, bg.x, bg.y, paint);
     }
 
+    /**
+     * Draw both backgrounds onto the canvas.
+     * @param canvas The canvas on which the backgrounds will be drawn.
+     */
     private void drawBackgrounds(Canvas canvas) {
         drawBackground(canvas, bg1);
         drawBackground(canvas, bg2);
     }
 
+    /**
+     * Draw the score onto the canvas.
+     * @param canvas The canvas on which the score will be drawn.
+     */
     private void drawScore(Canvas canvas) {
         canvas.drawText(Integer.toString(score), screenX / 2f, 164, paint);
     }
 
+    /**
+     * Draw the player onto the canvas.
+     * @param canvas The canvas on which the player will be drawn.
+     */
     private void drawPlayer(Canvas canvas) {
         canvas.drawBitmap(player.getBitmap(), player.x, player.y, paint);
     }
 
+    /**
+     * Draw the enemies onto the canvas.
+     * @param canvas The canvas on which the enemies will be drawn.
+     */
     private void drawEnemies(Canvas canvas) {
         for (Enemy enemy : enemies) {
             canvas.drawBitmap(enemy.getBitmap(), enemy.x, enemy.y, paint);
         }
     }
 
+    /**
+     * Save the score locally if it is a new high score for the user.
+     */
     private void updateLocalHighScore() {
         if (prefs.getInt("highScore", 0) < score) {
             SharedPreferences.Editor editor = prefs.edit();
@@ -281,6 +397,9 @@ public class GameView extends SurfaceView implements Runnable {
         }
     }
 
+    /**
+     * Push the user's name and score to the online Firebase database.
+     */
     private void uploadHighScoreToFirebase() {
         FirebaseDatabase root = FirebaseDatabase.getInstance();
         DatabaseReference ref = root.getReference("High Scores");
@@ -288,6 +407,9 @@ public class GameView extends SurfaceView implements Runnable {
         ref.push().setValue(post);
     }
 
+    /**
+     * Wait for two seconds before returning to the main menu.
+     */
     private void waitBeforeExiting() {
         try {
             Thread.sleep(2000);
@@ -298,14 +420,23 @@ public class GameView extends SurfaceView implements Runnable {
         }
     }
 
+    /**
+     * Update the high score locally if it is a personal best, upload the score to the Firebase
+     * database, and wait a while before returning the user to the main menu.
+     */
     private void handleEndgame() {
         updateLocalHighScore();
         uploadHighScoreToFirebase();
         waitBeforeExiting();
     }
 
+    /**
+     * Draw the background, the player, the enemies, and the score.
+     */
     private void draw() {
         if (getHolder().getSurface().isValid()) {
+
+            // player has hit an enemy
             if (!isPlaying) {
                 handleEndgame();
                 return;
@@ -322,6 +453,11 @@ public class GameView extends SurfaceView implements Runnable {
         }
     }
 
+    /**
+     * Checks whether the user has pressed on the top half of the screen.
+     * @param event The event from which the press will be determined.
+     * @return True if the user has pressed on the top half of the screen, otherwise false.
+     */
     private boolean isPressedTopHalf(MotionEvent event) {
         if (event.getY() < screenY / 2) {
             return true;
@@ -329,6 +465,11 @@ public class GameView extends SurfaceView implements Runnable {
         return false;
     }
 
+    /**
+     * Checks whether the user has pressed on the bottom half of the screen.
+     * @param event The event from which the press will be determined.
+     * @return True if the user has pressed on the bottom half of the screen, otherwise false.
+     */
     private boolean isPressedBottomHalf(MotionEvent event) {
         if (event.getY() > screenY / 2) {
             return true;
@@ -336,22 +477,38 @@ public class GameView extends SurfaceView implements Runnable {
         return false;
     }
 
+    /**
+     * Checks which vertical direction the player is moving, if any.
+     * @param event The event from which the vertical direction will be determined.
+     */
     private void checkPlayerDirection(MotionEvent event) {
         player.isGoingUp = isPressedTopHalf(event);
         player.isGoingDown = isPressedBottomHalf(event);
     }
 
+    /**
+     * Reset the vertical direction of the player.
+     */
     private void resetPlayerDirection() {
         player.isGoingUp = false;
         player.isGoingDown = false;
     }
 
+    /**
+     * Determine which vertical direction the user wishes to move.
+     * @param event The event from which the vertical direction will be determined.
+     * @return
+     */
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         switch (event.getAction()) {
+
+            // user pressed down
             case MotionEvent.ACTION_DOWN:
                 checkPlayerDirection(event);
                 break;
+
+            // user released press
             case MotionEvent.ACTION_UP:
                 resetPlayerDirection();
                 break;
@@ -360,6 +517,9 @@ public class GameView extends SurfaceView implements Runnable {
         return true;
     }
 
+    /**
+     * Wait a small amount of time (~17 ms) before updating and drawing all of the objects again.
+     */
     private void sleep() {
         try {
             Thread.sleep(1000 / FRAMES_PER_SECOND);
@@ -367,7 +527,11 @@ public class GameView extends SurfaceView implements Runnable {
             e.printStackTrace();
         }
     }
-    
+
+    /**
+     * Second thread that is responsible for sleeping. Greatly improves the performance of the game,
+     * by producing a smoother and more responsive experience.
+     */
     private void refreshThread() {
         Runnable r = () -> {
             sleep();
@@ -376,6 +540,9 @@ public class GameView extends SurfaceView implements Runnable {
         refreshThread.start();
     }
 
+    /**
+     * Main driver function of the game.
+     */
     @Override
     public void run() {
         while (isPlaying) {

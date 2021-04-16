@@ -7,9 +7,19 @@ import android.graphics.BitmapFactory;
 import static com.bf000259.spaceleague.GameView.screenRatioX;
 import static com.bf000259.spaceleague.GameView.screenRatioY;
 
+/**
+ * Class representing the player.
+ * @author Harshil Surendralal bf000259
+ */
 public class Player extends Object {
     boolean isGoingUp, isGoingDown, isGoingLeft, isGoingRight;
 
+    /**
+     * Create an object of type Player that holds the player image, its co-ordinates, and the
+     * direction they are moving.
+     * @param screenY The height of the device's screen.
+     * @param res The resources of the application.
+     */
     public Player(int screenY, Resources res) {
         bitmap = BitmapFactory.decodeResource(res, R.drawable.player);
 

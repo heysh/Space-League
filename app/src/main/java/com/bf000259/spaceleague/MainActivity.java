@@ -15,22 +15,33 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+/**
+ * Initial class - responsible for showing the main menu that is used to navigate through the game.
+ * @author Harshil Surendralal bf000259
+ */
 public class MainActivity extends AppCompatActivity {
     private SharedPreferences prefs;
     private int level;
     private String name;
 
+    /**
+     * Create and launch the GameActivity.
+     */
     private void launchGame() {
         Intent play = new Intent(MainActivity.this, GameActivity.class);
-        play.putExtra("level", level);
-        play.putExtra("name", name);
+        play.putExtra("level", level);  // add the level the user selected
+        play.putExtra("name", name);  // add the name of the user
         startActivity(play);
     }
 
+    /**
+     * Displays a dialog to the user, from which they can select the difficulty they would like to play.
+     */
     private void selectDifficultyDialog() {
         AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
-        alertDialog.setTitle("SELECT DIFFICULTY");
+        alertDialog.setTitle("SELECT DIFFICULTY");  // title of the dialog
 
+        // create an easy button
         alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "EASY", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -39,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // create a medium button
         alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "MEDIUM", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -47,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // create a hard button
         alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "HARD", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -57,10 +70,12 @@ public class MainActivity extends AppCompatActivity {
 
         alertDialog.show();
 
+        // get the buttons from the dialog
         Button easy = alertDialog.getButton(AlertDialog.BUTTON_NEUTRAL);
         Button medium = alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE);
         Button hard = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
 
+        // lay out the buttons in the dialog evenly
         LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) hard.getLayoutParams();
         layoutParams.weight = 10;
         easy.setLayoutParams(layoutParams);
@@ -68,25 +83,36 @@ public class MainActivity extends AppCompatActivity {
         hard.setLayoutParams(layoutParams);
     }
 
+    /**
+     * Update the "enter name" text to match the user's name.
+     */
     private void updateEnterNameText() {
         TextView enterName = findViewById(R.id.enterName);
         enterName.setText(name);
     }
 
+    /**
+     * Save the user's name onto the device.
+     */
     private void saveNameLocally() {
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString("name", name);
         editor.apply();
     }
 
+    /**
+     * Displays a dialog to the user, in which they can enter their name, or exit the dialog.
+     */
     private void enterNameDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-        builder.setTitle("Enter your name");
+        builder.setTitle("Enter your name");  // title of the dialog
 
+        // input field in which the user can enter their name
         final EditText input = new EditText(MainActivity.this);
         input.setInputType(InputType.TYPE_CLASS_TEXT);
         builder.setView(input);
 
+        // create an OK button
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -96,6 +122,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // create a cancel button
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -106,16 +133,26 @@ public class MainActivity extends AppCompatActivity {
         builder.show();
     }
 
+    /**
+     * Create and launch the HighScoresActivity.
+     */
     private void showHighScores() {
         Intent highScores = new Intent(MainActivity.this, HighScoresActivity.class);
         startActivity(highScores);
     }
 
+    /**
+     * Create and launch the InformationActivity.
+     */
     private void showInformation() {
         Intent information = new Intent(MainActivity.this, InformationActivity.class);
         startActivity(information);
     }
 
+    /**
+     * Display the view of the splash screen and set up the buttons.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -130,6 +167,7 @@ public class MainActivity extends AppCompatActivity {
 
         Helper.animateBackground(this);
 
+        // create the play button
         findViewById(R.id.play).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -137,6 +175,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // create the enter name button
         findViewById(R.id.enterName).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -144,6 +183,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // create the high scores button
         findViewById(R.id.highScores).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -151,6 +191,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // create the information button
         findViewById(R.id.information).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -158,9 +199,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // set the name of the user if they have set it before
         TextView enterName = findViewById(R.id.enterName);
         enterName.setText(prefs.getString("name", "ENTER NAME"));
 
+        // display the highest score the user has achieved, if they have played before
+        // otherwise display 0
         TextView highScores = findViewById(R.id.highScores);
         highScores.setText("HIGH SCORE  " + prefs.getInt("highScore", 0));
     }

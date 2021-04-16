@@ -6,7 +6,16 @@ import android.view.View;
 import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 
+/**
+ * Helper class that holds functions that are used between different activities.
+ * @author Harshil Surendralal bf000259
+ */
 public class Helper {
+
+    /**
+     * Hide the navigation bar from the screen.
+     * @param activity The activity on which the navigation bar will be hidden.
+     */
     protected static void hideNavigationBar(Activity activity) {
         activity.getWindow().getDecorView().setSystemUiVisibility(
                 View.SYSTEM_UI_FLAG_LAYOUT_STABLE
@@ -17,6 +26,10 @@ public class Helper {
                         | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
     }
 
+    /**
+     * Continuously move the background image to the left.
+     * @param activity
+     */
     protected static void animateBackground(Activity activity) {
         final ImageView bg1 = (ImageView) activity.findViewById(R.id.backgroundOne);
         final ImageView bg2 = (ImageView) activity.findViewById(R.id.backgroundTwo);

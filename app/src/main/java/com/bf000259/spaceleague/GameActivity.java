@@ -8,6 +8,10 @@ import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.WindowManager;
 
+/**
+ * Class that is responsible for setting up the game.
+ * @author Harshil Surendralal bf000259
+ */
 public class GameActivity extends AppCompatActivity {
     private GameView gameView;
 
@@ -19,10 +23,12 @@ public class GameActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         Helper.hideNavigationBar(this);
 
+        // extract the level and name
         Bundle b = getIntent().getExtras();
         int level = b.getInt("level");
         String name = b.getString("name");
 
+        // get the dimensions of the device's screen
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getRealMetrics(dm);
 

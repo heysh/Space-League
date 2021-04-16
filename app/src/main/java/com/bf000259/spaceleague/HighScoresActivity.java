@@ -17,6 +17,10 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.Collections;
 
+/**
+ * Class that is responsible for showing high scores achieved by all players.
+ * @author Harshil Surendralal bf000259
+ */
 public class HighScoresActivity extends AppCompatActivity {
     private Query ref;
     private ArrayList<String> highScores;
@@ -24,21 +28,31 @@ public class HighScoresActivity extends AppCompatActivity {
     private ListView listView;
     private String name, score;
 
+    /**
+     * Retrieve and store the high scores saved in the online realtime Firebase database.
+     * @param snapshot The data that is stored in this Firebase database.
+     */
     private void retrieveHighScores(DataSnapshot snapshot) {
+        // for every high score entry, concatenate the name and the score, and add to a list
         for (DataSnapshot snap : snapshot.getChildren()) {
             name = snap.child("name").getValue().toString();
             score = snap.child("score").getValue().toString();
             highScores.add(name + ": " + score);
         }
 
+        // reverse the order of the list so it is in descending order
         Collections.reverse(highScores);
     }
 
+    /**
+     * Display the view of the high scores screen.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_high_scores);
-        setTitle("High scores");
+        setTitle("High scores");  // title of the screen
 
         listView = (ListView) findViewById(R.id.highScoresList);
         highScores = new ArrayList<>();
@@ -47,6 +61,7 @@ public class HighScoresActivity extends AppCompatActivity {
 
         ref = FirebaseDatabase.getInstance().getReference().child("High Scores").orderByChild("score");
 
+        // if there are any changes in the database, get a fresh copy of all the data and display it
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
