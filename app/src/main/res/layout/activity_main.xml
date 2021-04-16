@@ -38,26 +38,33 @@
         android:textColor="#ffffff"
         android:textSize="96sp" />
 
-    <TextView
+    <Button
         android:id="@+id/enterName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="ENTER NAME"
         android:textColor="#ffffff"
         android:textSize="24sp"
+        android:backgroundTint="#20FFFFFF"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:padding="18sp"/>
+        android:padding="8sp"
+        android:layout_marginLeft="12sp"
+        android:layout_marginBottom="6sp"
+        android:textAllCaps="false"/>
 
-    <TextView
+    <Button
         android:id="@+id/highScores"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="HIGH SCORES"
         android:textColor="#ffffff"
         android:textSize="24sp"
+        android:backgroundTint="#20FFFFFF"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:padding="18sp"/>
+        android:padding="8sp"
+        android:layout_marginRight="12sp"
+        android:layout_marginBottom="6sp"/>
 
 </RelativeLayout>
