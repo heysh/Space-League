@@ -2,8 +2,8 @@ package com.bf000259.spaceleague;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.graphics.Point;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.WindowManager;
 
 public class GameActivity extends AppCompatActivity {
@@ -14,15 +14,16 @@ public class GameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        MainActivity.hideNavigationBar(this);
 
         Bundle b = getIntent().getExtras();
         int level = b.getInt("level");
         String name = b.getString("name");
 
-        Point point = new Point();
-        getWindowManager().getDefaultDisplay().getSize(point);
+        DisplayMetrics dm = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(dm);
 
-        gameView = new GameView(this, point.x, point.y, level, name);
+        gameView = new GameView(this, dm.widthPixels, dm.heightPixels, level, name);
 
         setContentView(gameView);
     }

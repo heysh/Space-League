@@ -3,6 +3,7 @@ package com.bf000259.spaceleague;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.animation.ValueAnimator;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -22,6 +23,16 @@ public class MainActivity extends AppCompatActivity {
     private SharedPreferences prefs;
     private int level;
     private String name;
+
+    protected static void hideNavigationBar(Activity activity) {
+        activity.getWindow().getDecorView().setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_FULLSCREEN
+                        | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+    }
 
     private void animateBackground() {
         final ImageView bg1 = (ImageView) findViewById(R.id.backgroundOne);
@@ -142,6 +153,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        hideNavigationBar(this);
 
         prefs = getSharedPreferences("spaceLeague", MODE_PRIVATE);
         name = prefs.getString("name", "Anon");

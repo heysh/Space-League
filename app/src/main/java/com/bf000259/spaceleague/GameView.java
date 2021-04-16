@@ -1,6 +1,5 @@
 package com.bf000259.spaceleague;
 
-// TODO: hide navigation bar
 // TODO: use accelerometer to move the player on the x axis
 // TODO: add a pause between level changes - draw the new level on the screen in the gap
 // TODO: make the buttons on the splash screen more obvious - TextView -> Button
