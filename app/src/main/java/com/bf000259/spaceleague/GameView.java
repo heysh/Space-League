@@ -1,7 +1,5 @@
 package com.bf000259.spaceleague;
 
-// TODO: add a pause between level changes - draw the new level on the screen in the gap
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
