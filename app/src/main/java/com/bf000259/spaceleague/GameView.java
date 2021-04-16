@@ -1,6 +1,5 @@
 package com.bf000259.spaceleague;
 
-// TODO: use accelerometer to move the player on the x axis
 // TODO: add a pause between level changes - draw the new level on the screen in the gap
 
 import android.content.Context;
@@ -21,6 +20,7 @@ import java.util.Random;
 public class GameView extends SurfaceView implements Runnable {
     private Thread thread;
     private GameActivity activity;
+    private Accelerometer accelerometer;
     private boolean isPlaying;
     protected static int screenX, screenY;
     private int level, score = 0, replaceEnemies = 0;
@@ -76,6 +76,7 @@ public class GameView extends SurfaceView implements Runnable {
         super(activity);
 
         this.activity = activity;
+        accelerometer = new Accelerometer(activity);
 
         prefs = activity.getSharedPreferences("spaceLeague", Context.MODE_PRIVATE);
 
@@ -138,6 +139,21 @@ public class GameView extends SurfaceView implements Runnable {
         checkBackground(bg2);
     }
 
+    private void resetAccelerometerReadings() {
+        player.isGoingLeft = false;
+        player.isGoingRight = false;
+    }
+
+    private void checkAccelerometer() {
+        if (accelerometer.tilt <= -1) {
+            player.isGoingLeft = true;
+        }
+
+        if (accelerometer.tilt >= 1) {
+            player.isGoingRight = true;
+        }
+    }
+
     private void updatePlayer() {
         if (player.isGoingUp) {
             player.y -= player.speed * screenRatioY;
@@ -145,6 +161,14 @@ public class GameView extends SurfaceView implements Runnable {
 
         if (player.isGoingDown) {
             player.y += player.speed * screenRatioY;
+        }
+
+        if (player.isGoingLeft) {
+            player.x -= player.speed * screenRatioY;
+        }
+
+        if (player.isGoingRight) {
+            player.x += player.speed * screenRatioY;
         }
     }
 
@@ -155,6 +179,14 @@ public class GameView extends SurfaceView implements Runnable {
 
         if (player.y >= screenY - player.height) {
             player.y = screenY - player.height;
+        }
+
+        if (player.x < 0) {
+            player.x = 0;
+        }
+
+        if (player.x >= screenX - player.width) {
+            player.x = screenX - player.width;
         }
     }
 
@@ -211,6 +243,8 @@ public class GameView extends SurfaceView implements Runnable {
         updateBackgrounds();
         checkBackgrounds();
 
+        resetAccelerometerReadings();
+        checkAccelerometer();
         updatePlayer();
         checkPlayer();
 

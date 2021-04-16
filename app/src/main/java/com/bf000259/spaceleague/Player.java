@@ -8,7 +8,7 @@ import static com.bf000259.spaceleague.GameView.screenRatioX;
 import static com.bf000259.spaceleague.GameView.screenRatioY;
 
 public class Player extends Object {
-    boolean isGoingUp, isGoingDown;
+    boolean isGoingUp, isGoingDown, isGoingLeft, isGoingRight;
 
     public Player(int screenY, Resources res) {
         bitmap = BitmapFactory.decodeResource(res, R.drawable.player);
