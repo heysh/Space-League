@@ -28,16 +28,21 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Tilt phone left and and right to move horizontally\nHold on the top half of the screen to go up and the bottom half to go down"
+        android:text="Touch and hold the top half of the screen to go up, and the bottom half to go down\n\nTilt the phone left and right to move your player horizontally"
         android:textColor="#ffffff"
-        android:textSize="44sp"
+        android:textSize="36sp"
         android:shadowColor="@color/black"
         android:shadowDx="5"
         android:shadowDy="5"
         android:shadowRadius="25"
-        android:paddingLeft="36sp"
-        android:paddingRight="36sp"
-        android:layout_marginTop="36sp"/>
+        android:paddingTop="14sp"
+        android:paddingBottom="18sp"
+        android:paddingLeft="20sp"
+        android:paddingRight="20sp"
+        android:background="@drawable/rounded_corners"
+        android:layout_marginTop="36sp"
+        android:layout_marginLeft="48sp"
+        android:layout_marginRight="48sp"/>
 
     <ImageView
         android:id="@+id/back"
