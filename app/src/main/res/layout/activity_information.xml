@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/backgroundOne"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/background"
+        android:scaleType="centerCrop"/>
+
+    <ImageView
+        android:id="@+id/backgroundTwo"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/background"
+        android:scaleType="centerCrop"/>
+
+    <ImageView
+        android:id="@+id/player"
+        android:layout_width="556sp"
+        android:layout_height="280sp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/player"
+        android:layout_marginTop="28sp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tilt phone left and and right to move horizontally\nHold on the top half of the screen to go up and the bottom half to go down"
+        android:textColor="#ffffff"
+        android:textSize="44sp"
+        android:shadowColor="@color/black"
+        android:shadowDx="5"
+        android:shadowDy="5"
+        android:shadowRadius="25"
+        android:paddingLeft="36sp"
+        android:paddingRight="36sp"
+        android:layout_marginTop="36sp"/>
+
+    <ImageView
+        android:id="@+id/back"
+        android:layout_width="75sp"
+        android:layout_height="75sp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:src="@drawable/back"
+        android:padding="14sp"/>
+
+</RelativeLayout>

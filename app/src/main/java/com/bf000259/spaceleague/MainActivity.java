@@ -34,9 +34,9 @@ public class MainActivity extends AppCompatActivity {
                         | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
     }
 
-    private void animateBackground() {
-        final ImageView bg1 = (ImageView) findViewById(R.id.backgroundOne);
-        final ImageView bg2 = (ImageView) findViewById(R.id.backgroundTwo);
+    protected static void animateBackground(Activity activity) {
+        final ImageView bg1 = (ImageView) activity.findViewById(R.id.backgroundOne);
+        final ImageView bg2 = (ImageView) activity.findViewById(R.id.backgroundTwo);
 
         final ValueAnimator animator = ValueAnimator.ofFloat(0.0f, 1.0f);
 
@@ -148,6 +148,11 @@ public class MainActivity extends AppCompatActivity {
         startActivity(highScores);
     }
 
+    private void showInformation() {
+        Intent information = new Intent(MainActivity.this, InformationActivity.class);
+        startActivity(information);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -160,7 +165,7 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
 
-        animateBackground();
+        animateBackground(this);
 
         findViewById(R.id.play).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -180,6 +185,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 showHighScores();
+            }
+        });
+
+        findViewById(R.id.information).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showInformation();
             }
         });
 
