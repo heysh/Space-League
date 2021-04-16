@@ -190,6 +190,18 @@ public class GameView extends SurfaceView implements Runnable {
         }
     }
 
+    private void checkScore() {
+        if (level == 1 && score > 15) {
+            level = 2;
+            replaceEnemies = 3;
+        }
+
+        if (level == 2 && score > 40) {
+            level = 3;
+            replaceEnemies = 3;
+        }
+    }
+
     private void replaceEnemy(Enemy enemy) {
         int index = enemy.enemyId;  // get index of enemy
         enemies[index] = null;  // delete enemy
@@ -202,6 +214,7 @@ public class GameView extends SurfaceView implements Runnable {
     private void checkEnemyOffScreen(Enemy enemy) {
         if (enemy.x + enemy.width < 0) {
             score += enemy.score;
+            checkScore();
 
             if (replaceEnemies > 0) {
                 replaceEnemy(enemy);
@@ -227,18 +240,6 @@ public class GameView extends SurfaceView implements Runnable {
         }
     }
 
-    private void checkScore() {
-        if (level == 1 && score > 15) {
-            level = 2;
-            replaceEnemies = 3;
-        }
-
-        if (level == 2 && score > 40) {
-            level = 3;
-            replaceEnemies = 3;
-        }
-    }
-
     private void update() {
         updateBackgrounds();
         checkBackgrounds();
@@ -249,8 +250,6 @@ public class GameView extends SurfaceView implements Runnable {
         checkPlayer();
 
         updateEnemies();
-
-        checkScore();
     }
 
     private void drawBackground(Canvas canvas, Background bg) {
