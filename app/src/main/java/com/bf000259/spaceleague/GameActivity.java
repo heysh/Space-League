@@ -17,7 +17,7 @@ public class GameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        MainActivity.hideNavigationBar(this);
+        Helper.hideNavigationBar(this);
 
         Bundle b = getIntent().getExtras();
         int level = b.getInt("level");

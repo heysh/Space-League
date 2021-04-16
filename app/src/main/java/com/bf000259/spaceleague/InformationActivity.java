@@ -1,6 +1,5 @@
 package com.bf000259.spaceleague;
 
-import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -40,8 +39,8 @@ public class InformationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_information);
 
-        MainActivity.hideNavigationBar(this);
-        MainActivity.animateBackground(this);
+        Helper.hideNavigationBar(this);
+        Helper.animateBackground(this);
         animatePlayer(this);
 
         findViewById(R.id.back).setOnClickListener(new View.OnClickListener() {
