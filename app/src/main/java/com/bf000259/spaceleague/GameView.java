@@ -72,12 +72,12 @@ public class GameView extends SurfaceView implements Runnable {
 
             // offset second enemy by a third of the screen
             if (i == 1) {
-                enemy.x = (int) (enemy.x + (640 * screenRatioX));
+                enemy.x = (int) (enemy.x + ((screenX + enemy.width) / 3));
             }
 
             // offset third enemy by two thirds of the screen
             if (i == 2) {
-                enemy.x = (int) (enemy.x + (1280 * screenRatioX));
+                enemy.x = (int) (enemy.x + (2 * (screenX + enemy.width) / 3));
             }
 
             enemies[i] = enemy;
@@ -288,7 +288,7 @@ public class GameView extends SurfaceView implements Runnable {
      * @param enemy The enemy that is to be checked.
      */
     private void checkEnemyOffScreen(Enemy enemy) {
-        if (enemy.x + enemy.width < 0) {
+        if (enemy.x + enemy.width <= 0) {
             score += enemy.score;  // add the points earned to the user's score
             checkScore();  // check if the user is eligible to move onto the next level
 
@@ -321,6 +321,7 @@ public class GameView extends SurfaceView implements Runnable {
      */
     private void updateEnemies() {
         for (Enemy enemy : enemies) {
+            System.out.println(enemy.enemyId + " enemy.x " + enemy.x);
             enemy.x -= enemy.speed;
             checkEnemyOffScreen(enemy);
             checkEnemyHitPlayer(enemy);
