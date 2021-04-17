@@ -20,6 +20,27 @@ public class Enemy extends Object {
     protected static int enemyCounter = 0;
 
     /**
+     * Get a y co-ordinate that would allow the enemy to hit the player at the current point in time.
+     * @param player The player into which the enemy will be colliding.
+     * @return The new y co-ordinate of the enemy.
+     */
+    protected int getTargetedY(Player player) {
+        Random r = new Random();
+        int y, playerHitbox;
+
+        playerHitbox = (int) (1.5 * player.getHeight());
+
+        y = r.nextInt(playerHitbox);
+        y += player.y;
+
+        if (y > screenY - height) {
+            y = screenY - height;
+        }
+
+        return y;
+    }
+
+    /**
      * Get a random y co-ordinate.
      * @return The y co-ordinate.
      */

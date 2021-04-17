@@ -300,7 +300,7 @@ public class GameView extends SurfaceView implements Runnable {
 
             // set the new co-ordinates of the enemy
             enemy.x = screenX;
-            enemy.y = random.nextInt(screenY - enemy.height);
+            enemy.y = enemy.getTargetedY(player);
         }
     }
 
