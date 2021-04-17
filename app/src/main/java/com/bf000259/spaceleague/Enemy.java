@@ -16,8 +16,7 @@ import static com.bf000259.spaceleague.GameView.screenY;
  * @author Harshil Surendralal bf000259
  */
 public class Enemy extends Object {
-    protected int score, enemyId;
-    protected static int enemyCounter = 0;
+    protected int score;
 
     /**
      * Get a y co-ordinate that would allow the enemy to hit the player at the current point in time.
@@ -75,7 +74,6 @@ public class Enemy extends Object {
     public Enemy(int speed, int score, Resources res, int id) {
         this.speed = speed;
         this.score = score;
-        this.enemyId = enemyCounter++;
 
         bitmap = BitmapFactory.decodeResource(res, id);
 
@@ -97,21 +95,5 @@ public class Enemy extends Object {
 
     public void setScore(int score) {
         this.score = score;
-    }
-
-    public int getEnemyId() {
-        return enemyId;
-    }
-
-    public void setEnemyId(int enemyId) {
-        this.enemyId = enemyId;
-    }
-
-    public int getEnemyCounter() {
-        return enemyCounter;
-    }
-
-    public void setEnemyCounter(int enemyCounter) {
-        Enemy.enemyCounter = enemyCounter;
     }
 }
