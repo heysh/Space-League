@@ -26,16 +26,32 @@ public class Enemy extends Object {
      */
     protected int getTargetedY(Player player) {
         Random r = new Random();
-        int y, playerHitbox;
+        int y, enemyUpperBound, enemyLowerBound, enemyRange;
 
-        playerHitbox = (int) (1.5 * player.getHeight());
+        // the highest the enemy can be while still colliding with the player
+        enemyUpperBound = player.y - (int) (0.9 * height);
 
-        y = r.nextInt(playerHitbox);
-        y += player.y;
+        // the lowest the enemy can be while still colliding with the player
+        enemyLowerBound = player.y + player.getHeight() - (int) (0.1 * height);
 
-        if (y > screenY - height) {
-            y = screenY - height;
+        // upper bound is off the screen
+        if (enemyUpperBound < 0) {
+            enemyUpperBound = 0;
         }
+
+        // lower bound is off the screen
+        if (enemyLowerBound > screenY - height) {
+            enemyLowerBound = screenY - height;
+        }
+
+        // the range of possible y values the enemy could be in
+        enemyRange = enemyLowerBound - enemyUpperBound;
+
+        // pick a random value in this range
+        y = r.nextInt(enemyRange);
+
+        // add the upper bound to the random value to make sure the enemy collides with the player
+        y += enemyUpperBound;
 
         return y;
     }
