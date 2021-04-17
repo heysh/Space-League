@@ -268,13 +268,13 @@ public class GameView extends SurfaceView implements Runnable {
      */
     private void checkScore() {
         // medium difficulty
-        if (level == 1 && score > 15) {
+        if (level == 1 && score >= 15) {
             level = 2;
             levelChanged = true;
         }
 
         // hard difficulty
-        if (level == 2 && score > 40) {
+        if (level == 2 && score >= 40) {
             level = 3;
             levelChanged = true;
         }
