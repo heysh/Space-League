@@ -460,10 +460,7 @@ public class GameView extends SurfaceView implements Runnable {
      * @return True if the user has pressed on the top half of the screen, otherwise false.
      */
     private boolean isPressedTopHalf(MotionEvent event) {
-        if (event.getY() < screenY / 2) {
-            return true;
-        }
-        return false;
+        return event.getY() < screenY / 2.0;
     }
 
     /**
@@ -472,10 +469,7 @@ public class GameView extends SurfaceView implements Runnable {
      * @return True if the user has pressed on the bottom half of the screen, otherwise false.
      */
     private boolean isPressedBottomHalf(MotionEvent event) {
-        if (event.getY() > screenY / 2) {
-            return true;
-        }
-        return false;
+        return event.getY() > screenY / 2.0;
     }
 
     /**
