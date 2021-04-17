@@ -32,7 +32,7 @@ public class Player extends Object {
         bitmap = Bitmap.createScaledBitmap(bitmap, width, height, false);
 
         x = (int) (64 * screenRatioX);
-        y = screenY / 2;
+        y = screenY / 2 - (int) (0.5 * height);
 
         speed = 30;
     }
