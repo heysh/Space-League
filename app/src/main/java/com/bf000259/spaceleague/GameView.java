@@ -13,6 +13,7 @@ import android.view.SurfaceView;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 /**
@@ -23,16 +24,16 @@ public class GameView extends SurfaceView implements Runnable {
     private Thread thread;
     private GameActivity activity;
     private Accelerometer accelerometer;
-    private boolean isPlaying;
+    private boolean isPlaying, levelChanged = false;
     protected static int screenX, screenY;
-    private int level, score = 0, replaceEnemies = 0;
+    private int level, score = 0;
     private static final int FRAMES_PER_SECOND = 60, BACKGROUND_SPEED = 2;
     protected static float screenRatioX, screenRatioY;
     private String name;
     private SharedPreferences prefs;
     private Paint paint;
     private Player player;
-    private Enemy[] enemies;
+    private ArrayList<Enemy> activeEnemies, removeEnemies;
     private Random random;
     private Background bg1, bg2;
 
@@ -80,7 +81,7 @@ public class GameView extends SurfaceView implements Runnable {
                 enemy.x = (int) (enemy.x + (2 * (screenX + enemy.width) / 3));
             }
 
-            enemies[i] = enemy;
+            activeEnemies.add(enemy);
         }
     }
 
@@ -117,7 +118,8 @@ public class GameView extends SurfaceView implements Runnable {
         paint = new Paint();
         configurePaint();
 
-        enemies = new Enemy[3];
+        activeEnemies = new ArrayList<>();
+        removeEnemies = new ArrayList<>();
         createEnemies();
 
         random = new Random();
@@ -253,65 +255,74 @@ public class GameView extends SurfaceView implements Runnable {
     }
 
     /**
+     * Update the position of the enemies.
+     */
+    private void updateEnemyPositions() {
+        for (Enemy enemy : activeEnemies) {
+            enemy.x -= enemy.speed;
+        }
+    }
+
+    /**
      * Increase difficulty if the player is doing well in their level.
      */
     private void checkScore() {
         // medium difficulty
         if (level == 1 && score > 15) {
             level = 2;
-            replaceEnemies = 3;
+            levelChanged = true;
         }
 
         // hard difficulty
         if (level == 2 && score > 40) {
             level = 3;
-            replaceEnemies = 3;
+            levelChanged = true;
         }
     }
 
     /**
-     * Replace an enemy with one that is of the correct difficulty.
-     * @param enemy The enemy that is to be replaced.
-     */
-    private void replaceEnemy(Enemy enemy) {
-        int index = enemy.enemyId;  // get index of enemy
-        enemies[index] = null;  // delete enemy
-        enemy = createCorrectEnemy();  // create correct enemy
-        enemy.enemyId = index;  // set the correct ID for the new enemy
-        Enemy.enemyCounter--;  // decrement the enemy counter
-        enemies[index] = enemy;  // insert the new enemy into the array of enemies
-    }
-
-    /**
-     * Check if an enemy has gone off the left-hand side of the screen. The enemy will be reset
+     * Check if the enemies have gone off the left-hand side of the screen. The enemy will be reset
      * to the right-hand side of the screen if this is true.
-     * @param enemy The enemy that is to be checked.
      */
-    private void checkEnemyOffScreen(Enemy enemy) {
-        if (enemy.x + enemy.width <= 0) {
-            score += enemy.score;  // add the points earned to the user's score
-            checkScore();  // check if the user is eligible to move onto the next level
+    private void checkEnemiesOffScreen() {
+        for (Enemy enemy : activeEnemies) {
+            if (enemy.x + enemy.width < 0) {
+                score += enemy.score;  // add the points earned to the user's score
+                checkScore();  // check if the user is eligible to move onto the next level
 
-            // if the difficulty has increased, replace the enemy
-            if (replaceEnemies > 0) {
-                replaceEnemy(enemy);
-                replaceEnemies--;
+                // if the difficulty has increased, and there are still enemies on the screen,
+                // add the enemy to the list of enemies that are to be removed, and move onto the
+                // next enemy
+                if (levelChanged && !activeEnemies.isEmpty()) {
+                    removeEnemies.add(enemy);
+                    continue;
+                }
+
+                enemy.x = screenX;
+                enemy.y = enemy.getTargetedY(player);
             }
-
-            // set the new co-ordinates of the enemy
-            enemy.x = screenX;
-            enemy.y = enemy.getTargetedY(player);
         }
     }
 
     /**
-     * Check if an enemy has collided with the player. The game will end if this is true, otherwise
-     * the user will continue playing.
-     * @param enemy The enemy that is to be checked.
+     * Remove all of the enemies that are no longer meant to be drawn onto screen.
      */
-    private void checkEnemyHitPlayer(Enemy enemy) {
-        if (Rect.intersects(enemy.getRectangle(), player.getRectangle())) {
-            isPlaying = false;
+    private void checkEnemiesToBeRemoved() {
+        for (Enemy enemy : removeEnemies) {
+            activeEnemies.remove(enemy);
+        }
+        removeEnemies.clear();
+    }
+
+    /**
+     * Check if the enemies have collided with the player. The game will end if this is true,
+     * otherwise the user will continue playing.
+     */
+    private void checkEnemiesHitPlayer() {
+        for (Enemy enemy : activeEnemies) {
+            if (Rect.intersects(enemy.getRectangle(), player.getRectangle())) {
+                isPlaying = false;
+            }
         }
     }
 
@@ -320,12 +331,15 @@ public class GameView extends SurfaceView implements Runnable {
      * whether they have gone off the screen, or hit the player.
      */
     private void updateEnemies() {
-        for (Enemy enemy : enemies) {
-            System.out.println(enemy.enemyId + " enemy.x " + enemy.x);
-            enemy.x -= enemy.speed;
-            checkEnemyOffScreen(enemy);
-            checkEnemyHitPlayer(enemy);
+        if (activeEnemies.isEmpty()) {
+            levelChanged = false;
+            createEnemies();
         }
+
+        updateEnemyPositions();
+        checkEnemiesOffScreen();
+        checkEnemiesToBeRemoved();
+        checkEnemiesHitPlayer();
     }
 
     /**
@@ -382,7 +396,7 @@ public class GameView extends SurfaceView implements Runnable {
      * @param canvas The canvas on which the enemies will be drawn.
      */
     private void drawEnemies(Canvas canvas) {
-        for (Enemy enemy : enemies) {
+        for (Enemy enemy : activeEnemies) {
             canvas.drawBitmap(enemy.getBitmap(), enemy.x, enemy.y, paint);
         }
     }
