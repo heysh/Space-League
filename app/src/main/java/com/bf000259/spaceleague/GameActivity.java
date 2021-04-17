@@ -15,6 +15,10 @@ import android.view.WindowManager;
 public class GameActivity extends AppCompatActivity {
     private GameView gameView;
 
+    /**
+     * Set up and display the GameView.
+     * @param savedInstanceState
+     */
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,12 +41,18 @@ public class GameActivity extends AppCompatActivity {
         setContentView(gameView);
     }
 
+    /**
+     * Pause the game.
+     */
     @Override
     protected void onPause() {
         super.onPause();
         gameView.pause();
     }
 
+    /**
+     * Resume the game.
+     */
     @Override
     protected void onResume() {
         super.onResume();

@@ -28,7 +28,7 @@ public class Helper {
 
     /**
      * Continuously move the background image to the left.
-     * @param activity
+     * @param activity The activity on which the background will be animated.
      */
     protected static void animateBackground(Activity activity) {
         final ImageView bg1 = (ImageView) activity.findViewById(R.id.backgroundOne);

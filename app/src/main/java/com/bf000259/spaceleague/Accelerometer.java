@@ -27,7 +27,7 @@ public class Accelerometer implements SensorEventListener {
 
     /**
      * Update the tilt value every time it changes.
-     * @param event
+     * @param event The event from which the tilt will be recorded.
      */
     @Override
     public void onSensorChanged(SensorEvent event) {
