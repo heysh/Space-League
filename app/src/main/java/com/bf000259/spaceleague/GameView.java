@@ -26,7 +26,7 @@ public class GameView extends SurfaceView implements Runnable {
     private Accelerometer accelerometer;
     private boolean isPlaying, levelChanged = false;
     protected static int screenX, screenY;
-    private int level, score = 0;
+    private int level, score = 0, timeBetweenLevels = 120;
     private static final int FRAMES_PER_SECOND = 60, BACKGROUND_SPEED = 2;
     protected static float screenRatioX, screenRatioY;
     private String name;
@@ -39,10 +39,12 @@ public class GameView extends SurfaceView implements Runnable {
 
     /**
      * Configures the paint for drawing text onto the screen.
+     * @param size The size of the text.
+     * @param colour The colour of the text.
      */
-    private void configurePaint() {
-        paint.setTextSize(128);
-        paint.setColor(Color.WHITE);
+    private void configurePaint(int size, int colour) {
+        paint.setTextSize(size);
+        paint.setColor(colour);
     }
 
     /**
@@ -116,7 +118,6 @@ public class GameView extends SurfaceView implements Runnable {
         player = new Player(screenY, getResources());
 
         paint = new Paint();
-        configurePaint();
 
         activeEnemies = new ArrayList<>();
         removeEnemies = new ArrayList<>();
@@ -305,7 +306,7 @@ public class GameView extends SurfaceView implements Runnable {
     }
 
     /**
-     * Remove all of the enemies that are no longer meant to be drawn onto screen.
+     * Remove all of the enemies that are no longer meant to be drawn onto the screen.
      */
     private void checkEnemiesToBeRemoved() {
         for (Enemy enemy : removeEnemies) {
@@ -328,12 +329,19 @@ public class GameView extends SurfaceView implements Runnable {
 
     /**
      * Iterate through each enemy, and update their position on the screen. Check each enemy to see
-     * whether they have gone off the screen, or hit the player.
+     * whether they have gone off the screen, or hit the player. If there are no enemies on the screen,
+     * a countdown will start, allowing text to be drawn onto the screen for a specific amount of time.
+     * Once the time allocated to display the text has been elapsed, the enemies will be created again.
      */
     private void updateEnemies() {
         if (activeEnemies.isEmpty()) {
-            levelChanged = false;
-            createEnemies();
+            timeBetweenLevels--;
+
+            if (timeBetweenLevels == 0) {
+                timeBetweenLevels = 120;
+                levelChanged = false;
+                createEnemies();
+            }
         }
 
         updateEnemyPositions();
@@ -380,7 +388,9 @@ public class GameView extends SurfaceView implements Runnable {
      * @param canvas The canvas on which the score will be drawn.
      */
     private void drawScore(Canvas canvas) {
-        canvas.drawText(Integer.toString(score), screenX / 2f, 164, paint);
+        configurePaint(128, Color.WHITE);
+        float x = (screenX / 2f) - (paint.measureText(Integer.toString(score)) / 2);
+        canvas.drawText(Integer.toString(score), x, 164, paint);
     }
 
     /**
@@ -446,6 +456,43 @@ public class GameView extends SurfaceView implements Runnable {
     }
 
     /**
+     * Draw the current level onto the screen.
+     * @param canvas The canvas on which the text will be drawn.
+     * @param bounds The bounds in which the dimensions of the text will be stored.
+     * @param text The text that is to be drawn onto the screen.
+     */
+    private void drawLevelText(Canvas canvas, Rect bounds, String text) {
+        paint.getTextBounds(text, 0, text.length(), bounds);
+
+        float x = (screenX / 2f) - (bounds.width() / 2f);
+        float y = (screenY / 2f) - ((paint.descent() + paint.ascent()) / 2);
+
+        canvas.drawText(text, x, y, paint);
+    }
+
+    /**
+     * Draw the current level onto the screen if the level has changed.
+     * @param canvas The canvas on which the text will be drawn.
+     */
+    private void drawLevelIfLevelChanged(Canvas canvas) {
+        if (timeBetweenLevels >= 24 && timeBetweenLevels <= 96) {
+            Rect bounds = new Rect();
+
+            // medium
+            if (level == 2) {
+                configurePaint(256, Color.rgb(255, 140, 0));
+                drawLevelText(canvas, bounds, "MEDIUM");
+            }
+
+            // hard
+            if (level == 3) {
+                configurePaint(256, Color.rgb(236, 28, 36));
+                drawLevelText(canvas, bounds, "HARD");
+            }
+        }
+    }
+
+    /**
      * Draw the background, the player, the enemies, and the score.
      */
     private void draw() {
@@ -463,6 +510,7 @@ public class GameView extends SurfaceView implements Runnable {
             drawPlayer(canvas);
             drawEnemies(canvas);
             drawScore(canvas);
+            drawLevelIfLevelChanged(canvas);
 
             getHolder().unlockCanvasAndPost(canvas);
         }
