@@ -4,10 +4,11 @@ import android.graphics.Bitmap;
 import android.graphics.Rect;
 
 /**
- * Class responsible for holding variables, and providing access to these variables.
+ * Abstract class responsible for holding variables, and providing access to these variables. A base
+ * class from which the player, and enemies inherit.
  * @author Harshil Surendralal bf000259
  */
-public class Object {
+public abstract class Object {
     protected int x, y, width, height, speed;
     protected Bitmap bitmap;
 
