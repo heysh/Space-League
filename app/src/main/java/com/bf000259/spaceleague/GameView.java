@@ -590,9 +590,7 @@ public class GameView extends SurfaceView implements Runnable {
      * by producing a smoother and more responsive experience.
      */
     private void refreshThread() {
-        Runnable r = () -> {
-            sleep();
-        };
+        Runnable r = this::sleep;
         Thread refreshThread = new Thread(r);
         refreshThread.start();
     }
