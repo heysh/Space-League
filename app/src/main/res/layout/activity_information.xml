@@ -28,9 +28,9 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Touch and hold the top half of the screen to go up, and the bottom half to go down\n\nTilt the phone left and right to move your player horizontally"
+        android:text="Touch and hold the top half of the screen to go up, and the bottom half to go down\n\nTilt the phone left and right to move your player horizontally\n\nYour goal is to keep your spaceship in pristine condition by avoiding all of the incoming enemies"
         android:textColor="#ffffff"
-        android:textSize="36sp"
+        android:textSize="26sp"
         android:shadowColor="@color/black"
         android:shadowDx="5"
         android:shadowDy="5"
