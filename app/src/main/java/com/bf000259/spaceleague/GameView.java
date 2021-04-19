@@ -101,8 +101,8 @@ public class GameView extends SurfaceView implements Runnable {
 
         prefs = activity.getSharedPreferences("spaceLeague", Context.MODE_PRIVATE);
 
-        this.screenX = screenX;
-        this.screenY = screenY;
+        GameView.screenX = screenX;
+        GameView.screenY = screenY;
         this.level = level;
         this.name = name;
 
