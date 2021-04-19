@@ -63,11 +63,6 @@ public class InformationActivity extends AppCompatActivity {
         animatePlayer(this);
 
         // create the back button
-        findViewById(R.id.back).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                returnToMainActivity();
-            }
-        });
+        findViewById(R.id.back).setOnClickListener(v -> returnToMainActivity());
     }
 }
