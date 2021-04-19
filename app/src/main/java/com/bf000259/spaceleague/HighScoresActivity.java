@@ -46,7 +46,7 @@ public class HighScoresActivity extends AppCompatActivity {
 
     /**
      * Display the view of the high scores screen.
-     * @param savedInstanceState
+     * @param savedInstanceState The data from this activity's previous initialisation.
      */
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

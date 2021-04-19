@@ -554,7 +554,7 @@ public class GameView extends SurfaceView implements Runnable {
     /**
      * Determine which vertical direction the user wishes to move.
      * @param event The event from which the vertical direction will be determined.
-     * @return
+     * @return True
      */
     @Override
     public boolean onTouchEvent(MotionEvent event) {

@@ -50,7 +50,7 @@ public class InformationActivity extends AppCompatActivity {
 
     /**
      * Display the view of the information screen and set up the button.
-     * @param savedInstanceState
+     * @param savedInstanceState The data from this activity's previous initialisation.
      */
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override

@@ -17,7 +17,7 @@ public class GameActivity extends AppCompatActivity {
 
     /**
      * Set up and display the GameView.
-     * @param savedInstanceState
+     * @param savedInstanceState The data from this activity's previous initialisation.
      */
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override

@@ -134,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Display the view of the splash screen and set up the buttons.
-     * @param savedInstanceState
+     * @param savedInstanceState The data from this activity's previous initialisation.
      */
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
