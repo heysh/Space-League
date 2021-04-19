@@ -170,6 +170,7 @@ public class MainActivity extends AppCompatActivity {
         // display the highest score the user has achieved, if they have played before
         // otherwise display 0
         TextView highScores = findViewById(R.id.highScores);
-        highScores.setText("HIGH SCORE  " + prefs.getInt("highScore", 0));
+        String highScoresText = "HIGH SCORE  " + prefs.getInt("highScore", 0);
+        highScores.setText(highScoresText);
     }
 }
