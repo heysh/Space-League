@@ -22,11 +22,8 @@ import java.util.Collections;
  * @author Harshil Surendralal bf000259
  */
 public class HighScoresActivity extends AppCompatActivity {
-    private Query ref;
     private ArrayList<String> highScores;
     private ArrayAdapter<String> adapter;
-    private ListView listView;
-    private String name, score;
 
     /**
      * Retrieve and store the high scores saved in the online realtime Firebase database.
@@ -35,8 +32,8 @@ public class HighScoresActivity extends AppCompatActivity {
     private void retrieveHighScores(DataSnapshot snapshot) {
         // for every high score entry, concatenate the name and the score, and add to a list
         for (DataSnapshot snap : snapshot.getChildren()) {
-            name = snap.child("name").getValue().toString();
-            score = snap.child("score").getValue().toString();
+            String name = snap.child("name").getValue().toString();
+            String score = snap.child("score").getValue().toString();
             highScores.add(name + ": " + score);
         }
 
@@ -54,12 +51,12 @@ public class HighScoresActivity extends AppCompatActivity {
         setContentView(R.layout.activity_high_scores);
         setTitle("High scores");  // title of the screen
 
-        listView = (ListView) findViewById(R.id.highScoresList);
+        ListView listView = (ListView) findViewById(R.id.highScoresList);
         highScores = new ArrayList<>();
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, highScores);
         listView.setAdapter(adapter);
 
-        ref = FirebaseDatabase.getInstance().getReference().child("High Scores").orderByChild("score");
+        Query ref = FirebaseDatabase.getInstance().getReference().child("High Scores").orderByChild("score");
 
         // if there are any changes in the database, get a fresh copy of all the data and display it
         ref.addValueEventListener(new ValueEventListener() {
