@@ -42,30 +42,21 @@ public class MainActivity extends AppCompatActivity {
         alertDialog.setTitle("SELECT DIFFICULTY");  // title of the dialog
 
         // create an easy button
-        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "EASY", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                level = 1;
-                launchGame();
-            }
+        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "EASY", (dialog, which) -> {
+            level = 1;
+            launchGame();
         });
 
         // create a medium button
-        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "MEDIUM", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                level = 2;
-                launchGame();
-            }
+        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "MEDIUM", (dialog, which) -> {
+            level = 2;
+            launchGame();
         });
 
         // create a hard button
-        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "HARD", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                level = 3;
-                launchGame();
-            }
+        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "HARD", (dialog, which) -> {
+            level = 3;
+            launchGame();
         });
 
         alertDialog.show();
@@ -113,22 +104,14 @@ public class MainActivity extends AppCompatActivity {
         builder.setView(input);
 
         // create an OK button
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                name = input.getText().toString();
-                updateEnterNameText();
-                saveNameLocally();
-            }
+        builder.setPositiveButton("OK", (dialog, which) -> {
+            name = input.getText().toString();
+            updateEnterNameText();
+            saveNameLocally();
         });
 
         // create a cancel button
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
+        builder.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
 
         builder.show();
     }
@@ -168,36 +151,16 @@ public class MainActivity extends AppCompatActivity {
         Helper.animateBackground(this);
 
         // create the play button
-        findViewById(R.id.play).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                selectDifficultyDialog();
-            }
-        });
+        findViewById(R.id.play).setOnClickListener(v -> selectDifficultyDialog());
 
         // create the enter name button
-        findViewById(R.id.enterName).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                enterNameDialog();
-            }
-        });
+        findViewById(R.id.enterName).setOnClickListener(v -> enterNameDialog());
 
         // create the high scores button
-        findViewById(R.id.highScores).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showHighScores();
-            }
-        });
+        findViewById(R.id.highScores).setOnClickListener(v -> showHighScores());
 
         // create the information button
-        findViewById(R.id.information).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showInformation();
-            }
-        });
+        findViewById(R.id.information).setOnClickListener(v -> showInformation());
 
         // set the name of the user if they have set it before
         TextView enterName = findViewById(R.id.enterName);
