@@ -11,7 +11,6 @@ import android.hardware.SensorManager;
  * @author Harshil Surendralal bf000259
  */
 public class Accelerometer implements SensorEventListener {
-    private SensorManager sensorManager;
     protected Sensor sensor;
     protected float tilt;
 
@@ -20,7 +19,7 @@ public class Accelerometer implements SensorEventListener {
      * @param context The context in which the sensor will be applied.
      */
     public Accelerometer(Context context) {
-        sensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
+        SensorManager sensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
         sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_GAME);
     }
