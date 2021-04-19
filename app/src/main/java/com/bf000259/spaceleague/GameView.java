@@ -14,7 +14,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 /**
  * Main driver class of the game - responsible for the actual gameplay.
@@ -34,7 +33,6 @@ public class GameView extends SurfaceView implements Runnable {
     private Paint paint;
     private Player player;
     private ArrayList<Enemy> activeEnemies, removeEnemies;
-    private Random random;
     private Background bg1, bg2;
 
     /**
@@ -122,8 +120,6 @@ public class GameView extends SurfaceView implements Runnable {
         activeEnemies = new ArrayList<>();
         removeEnemies = new ArrayList<>();
         createEnemies();
-
-        random = new Random();
     }
 
     /**
