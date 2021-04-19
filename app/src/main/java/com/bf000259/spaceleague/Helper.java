@@ -39,16 +39,13 @@ public class Helper {
         animator.setRepeatCount(ValueAnimator.INFINITE);
         animator.setInterpolator(new LinearInterpolator());
         animator.setDuration(10000L);
-        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                final float progress = (float) animation.getAnimatedValue();
-                final float width = bg1.getWidth();
-                final float translationX = width * progress;
+        animator.addUpdateListener(animation -> {
+            final float progress = (float) animation.getAnimatedValue();
+            final float width = bg1.getWidth();
+            final float translationX = width * progress;
 
-                bg1.setTranslationX(-translationX);
-                bg2.setTranslationX(-(translationX - width));
-            }
+            bg1.setTranslationX(-translationX);
+            bg2.setTranslationX(-(translationX - width));
         });
         animator.start();
     }
