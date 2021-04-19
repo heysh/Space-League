@@ -20,20 +20,20 @@ import java.util.ArrayList;
  * @author Harshil Surendralal bf000259
  */
 public class GameView extends SurfaceView implements Runnable {
-    private Thread thread;
-    private GameActivity activity;
-    private Accelerometer accelerometer;
-    private boolean isPlaying, levelChanged = false;
-    protected static int screenX, screenY;
-    private int level, score = 0, timeBetweenLevels = 120;
+    private final GameActivity activity;
+    private final Accelerometer accelerometer;
+    private final String name;
+    private final SharedPreferences prefs;
+    private final Paint paint;
+    private final Background bg1, bg2;
+    private final Player player;
+    private final ArrayList<Enemy> activeEnemies, removeEnemies;
     private static final int FRAMES_PER_SECOND = 60, BACKGROUND_SPEED = 2;
+    private Thread thread;
+    private boolean isPlaying, levelChanged = false;
+    private int level, score = 0, timeBetweenLevels = 120;
+    protected static int screenX, screenY;
     protected static float screenRatioX, screenRatioY;
-    private String name;
-    private SharedPreferences prefs;
-    private Paint paint;
-    private Player player;
-    private ArrayList<Enemy> activeEnemies, removeEnemies;
-    private Background bg1, bg2;
 
     /**
      * Configures the paint for drawing text onto the screen.
