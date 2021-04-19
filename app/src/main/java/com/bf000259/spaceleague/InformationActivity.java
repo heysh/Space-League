@@ -2,6 +2,7 @@ package com.bf000259.spaceleague;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
@@ -10,6 +11,7 @@ import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 /**
@@ -50,6 +52,7 @@ public class InformationActivity extends AppCompatActivity {
      * Display the view of the information screen and set up the button.
      * @param savedInstanceState
      */
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

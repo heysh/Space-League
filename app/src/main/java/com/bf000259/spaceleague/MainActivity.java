@@ -1,10 +1,12 @@
 package com.bf000259.spaceleague;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.WindowManager;
@@ -134,6 +136,7 @@ public class MainActivity extends AppCompatActivity {
      * Display the view of the splash screen and set up the buttons.
      * @param savedInstanceState
      */
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

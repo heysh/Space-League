@@ -19,7 +19,7 @@ public class GameActivity extends AppCompatActivity {
      * Set up and display the GameView.
      * @param savedInstanceState
      */
-    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

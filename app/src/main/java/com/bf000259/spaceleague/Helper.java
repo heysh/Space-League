@@ -2,9 +2,12 @@ package com.bf000259.spaceleague;
 
 import android.animation.ValueAnimator;
 import android.app.Activity;
+import android.os.Build;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
+
+import androidx.annotation.RequiresApi;
 
 /**
  * Helper class that holds functions that are used between different activities.
@@ -16,6 +19,7 @@ public class Helper {
      * Hide the navigation bar from the screen.
      * @param activity The activity on which the navigation bar will be hidden.
      */
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     protected static void hideNavigationBar(Activity activity) {
         activity.getWindow().getDecorView().setSystemUiVisibility(
                 View.SYSTEM_UI_FLAG_LAYOUT_STABLE
