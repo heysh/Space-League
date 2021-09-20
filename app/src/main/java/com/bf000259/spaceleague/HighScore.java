@@ -1,8 +1,8 @@
-package com.bf000259.spaceleague;
+package com.spaceleague;
 
 /**
  * Class that is used when pushing a high score to the Firebase database.
- * @author Harshil Surendralal bf000259
+ * @author Harshil Surendralal
  */
 public class HighScore {
     public String name;

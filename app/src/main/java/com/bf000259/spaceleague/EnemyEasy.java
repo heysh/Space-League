@@ -1,10 +1,10 @@
-package com.bf000259.spaceleague;
+package com.spaceleague;
 
 import android.content.res.Resources;
 
 /**
  * Class representing an enemy of easy difficulty.
- * @author Harshil Surendralal bf000259
+ * @author Harshil Surendralal
  */
 public class EnemyEasy extends Enemy {
 

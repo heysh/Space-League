@@ -1,4 +1,4 @@
-package com.bf000259.spaceleague;
+package com.spaceleague;
 
 import org.junit.Test;
 

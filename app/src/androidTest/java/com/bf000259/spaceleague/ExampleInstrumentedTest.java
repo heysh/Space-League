@@ -1,4 +1,4 @@
-package com.bf000259.spaceleague;
+package com.spaceleague;
 
 import android.content.Context;
 
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
     public void useAppContext() {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        assertEquals("com.bf000259.spaceleague", appContext.getPackageName());
+        assertEquals("com.spaceleague", appContext.getPackageName());
     }
 }

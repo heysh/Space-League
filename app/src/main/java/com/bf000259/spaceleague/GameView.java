@@ -1,4 +1,4 @@
-package com.bf000259.spaceleague;
+package com.spaceleague;
 
 import android.content.Context;
 import android.content.Intent;
@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 /**
  * Main driver class of the game - responsible for the actual gameplay.
- * @author Harshil Surendralal bf000259
+ * @author Harshil Surendralal
  */
 public class GameView extends SurfaceView implements Runnable {
     private final GameActivity activity;

@@ -1,4 +1,4 @@
-package com.bf000259.spaceleague;
+package com.spaceleague;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -16,7 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 /**
  * Class that is responsible for showing the instructions on how to play the game.
- * @author Harshil Surendralal bf000259
+ * @author Harshil Surendralal
  */
 public class InformationActivity extends AppCompatActivity {
 

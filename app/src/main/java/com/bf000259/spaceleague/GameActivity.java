@@ -1,4 +1,4 @@
-package com.bf000259.spaceleague;
+package com.spaceleague;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,7 +10,7 @@ import android.view.WindowManager;
 
 /**
  * Class that is responsible for setting up the game.
- * @author Harshil Surendralal bf000259
+ * @author Harshil Surendralal
  */
 public class GameActivity extends AppCompatActivity {
     private GameView gameView;

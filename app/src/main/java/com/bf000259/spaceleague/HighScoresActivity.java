@@ -1,4 +1,4 @@
-package com.bf000259.spaceleague;
+package com.spaceleague;
 
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
@@ -19,7 +19,7 @@ import java.util.Collections;
 
 /**
  * Class that is responsible for showing high scores achieved by all players.
- * @author Harshil Surendralal bf000259
+ * @author Harshil Surendralal
  */
 public class HighScoresActivity extends AppCompatActivity {
     private ArrayList<String> highScores;

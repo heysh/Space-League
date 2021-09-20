@@ -1,4 +1,4 @@
-package com.bf000259.spaceleague;
+package com.spaceleague;
 
 import android.content.Context;
 import android.hardware.Sensor;
@@ -8,7 +8,7 @@ import android.hardware.SensorManager;
 
 /**
  * Class responsible for handling the accelerometer.
- * @author Harshil Surendralal bf000259
+ * @author Harshil Surendralal
  */
 public class Accelerometer implements SensorEventListener {
     protected Sensor sensor;

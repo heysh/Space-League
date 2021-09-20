@@ -1,4 +1,4 @@
-package com.bf000259.spaceleague;
+package com.spaceleague;
 
 import android.graphics.Bitmap;
 import android.graphics.Rect;
@@ -6,7 +6,7 @@ import android.graphics.Rect;
 /**
  * Abstract class responsible for holding variables, and providing access to these variables. A base
  * class from which the player, and enemies inherit.
- * @author Harshil Surendralal bf000259
+ * @author Harshil Surendralal
  */
 public abstract class Object {
     protected int x, y, width, height, speed;

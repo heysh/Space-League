@@ -1,4 +1,4 @@
-package com.bf000259.spaceleague;
+package com.spaceleague;
 
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -6,14 +6,14 @@ import android.graphics.BitmapFactory;
 
 import java.util.Random;
 
-import static com.bf000259.spaceleague.GameView.screenRatioX;
-import static com.bf000259.spaceleague.GameView.screenRatioY;
-import static com.bf000259.spaceleague.GameView.screenX;
-import static com.bf000259.spaceleague.GameView.screenY;
+import static com.spaceleague.GameView.screenRatioX;
+import static com.spaceleague.GameView.screenRatioY;
+import static com.spaceleague.GameView.screenX;
+import static com.spaceleague.GameView.screenY;
 
 /**
  * Class representing an enemy.
- * @author Harshil Surendralal bf000259
+ * @author Harshil Surendralal
  */
 public class Enemy extends Object {
     protected int score;

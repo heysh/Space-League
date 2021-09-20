@@ -1,15 +1,15 @@
-package com.bf000259.spaceleague;
+package com.spaceleague;
 
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
-import static com.bf000259.spaceleague.GameView.screenRatioX;
-import static com.bf000259.spaceleague.GameView.screenRatioY;
+import static com.spaceleague.GameView.screenRatioX;
+import static com.spaceleague.GameView.screenRatioY;
 
 /**
  * Class representing the player.
- * @author Harshil Surendralal bf000259
+ * @author Harshil Surendralal
  */
 public class Player extends Object {
     boolean isGoingUp, isGoingDown, isGoingLeft, isGoingRight;

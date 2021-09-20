@@ -1,4 +1,4 @@
-package com.bf000259.spaceleague;
+package com.spaceleague;
 
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -6,7 +6,7 @@ import android.graphics.BitmapFactory;
 
 /**
  * Class representing the background.
- * @author Harshil Surendralal bf000259
+ * @author Harshil Surendralal
  */
 public class Background {
     int x = 0, y = 0;

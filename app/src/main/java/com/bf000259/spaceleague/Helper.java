@@ -1,4 +1,4 @@
-package com.bf000259.spaceleague;
+package com.spaceleague;
 
 import android.animation.ValueAnimator;
 import android.app.Activity;
@@ -11,7 +11,7 @@ import androidx.annotation.RequiresApi;
 
 /**
  * Helper class that holds functions that are used between different activities.
- * @author Harshil Surendralal bf000259
+ * @author Harshil Surendralal
  */
 public class Helper {
 

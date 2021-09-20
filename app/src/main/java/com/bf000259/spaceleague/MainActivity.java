@@ -1,4 +1,4 @@
-package com.bf000259.spaceleague;
+package com.spaceleague;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,7 +17,7 @@ import android.widget.TextView;
 
 /**
  * Initial class - responsible for showing the main menu that is used to navigate through the game.
- * @author Harshil Surendralal bf000259
+ * @author Harshil Surendralal
  */
 public class MainActivity extends AppCompatActivity {
     private SharedPreferences prefs;
